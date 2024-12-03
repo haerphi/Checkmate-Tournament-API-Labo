@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Checkmate.DAL\Checkmate.DAL.csproj" />
+    <ProjectReference Include="..\Checkmate.Domain\Checkmate.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
