@@ -1,3 +1,4 @@
+using Checkmate.API.Services;
 using Checkmate.BLL.Services;
 using Checkmate.BLL.Services.Interfaces;
 using Checkmate.DAL.Interfaces;
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen();
 // Dependancy injection
 builder.Services.AddTransient<SqlConnection>(c =>
 	new SqlConnection(builder.Configuration.GetConnectionString("Default")));
+
+builder.Services.AddTransient<MailHelperService>();
 
 // DAL injections
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();

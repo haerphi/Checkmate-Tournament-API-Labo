@@ -1,5 +1,6 @@
 ﻿using Checkmate.API.DTO.Player;
 using Checkmate.API.Mappers;
+using Checkmate.API.Services;
 using Checkmate.BLL.Services.Interfaces;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Utils;
@@ -12,10 +13,12 @@ namespace Checkmate.API.Controllers
 	public class PlayerController : ControllerBase
 	{
 		private readonly IPlayerService m_PlayerService;
+		private readonly MailHelperService m_MailHelperService;
 
-		public PlayerController(IPlayerService playerService)
+		public PlayerController(IPlayerService playerService, MailHelperService mailHelperService)
 		{
 			m_PlayerService = playerService;
+			m_MailHelperService = mailHelperService;
 		}
 
 		[HttpPost(Name = "CreatePlayer")]
@@ -29,6 +32,7 @@ namespace Checkmate.API.Controllers
 			try
 			{
 				Player createdPlayer = m_PlayerService.Create(player.ToPlayer());
+				m_MailHelperService.SendWelcome(createdPlayer);
 
 				return createdPlayer.ToPlayerDTO();
 			}
