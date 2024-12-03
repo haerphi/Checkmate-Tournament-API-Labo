@@ -2,15 +2,15 @@
 
 namespace Checkmate.DAL.Interfaces
 {
-	public interface IRepository<Complete, Light>
+	public interface IRepository<Key, Complete, Light>
 	{
 		public Complete Create(Complete Entity);
 
 		public IEnumerable<Light> GetAll(Pagination pagination);
-		public Complete GetById(int id);
+		public Complete GetById(Key id);
 
 		public Complete Update(Complete Entity);
 
-		public void Delete(int id);
+		public void Delete(Key id);
 	}
 }

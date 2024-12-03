@@ -3,7 +3,7 @@ using Checkmate.Domain.Utils;
 
 namespace Checkmate.DAL.Interfaces
 {
-	public interface IPlayerRepository : IRepository<Player, PlayerLight>
+	public interface IPlayerRepository : IRepository<int, Player, PlayerLight>
 	{
 		public IEnumerable<PlayerLight> GetAll(Pagination pagination, int? tournamentId = null);
 	}
