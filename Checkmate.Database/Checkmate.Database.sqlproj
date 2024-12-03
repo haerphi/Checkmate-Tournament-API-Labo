@@ -73,5 +73,6 @@
     <Build Include="Tables\Category.sql" />
     <Build Include="Tables\Tournament.sql" />
     <Build Include="Tables\MM_Tournament_Category.sql" />
+    <Build Include="StoredProcedures\GetPlayersFn.sql" />
   </ItemGroup>
 </Project>
