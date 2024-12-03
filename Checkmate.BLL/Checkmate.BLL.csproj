@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Isopoh.Cryptography.Argon2" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Checkmate.DAL\Checkmate.DAL.csproj" />
     <ProjectReference Include="..\Checkmate.Domain\Checkmate.Domain.csproj" />
   </ItemGroup>

@@ -1,3 +1,5 @@
+using Checkmate.BLL.Services;
+using Checkmate.BLL.Services.Interfaces;
 using Checkmate.DAL.Interfaces;
 using Checkmate.DAL.Repositories;
 using Microsoft.Data.SqlClient;
@@ -17,6 +19,9 @@ builder.Services.AddTransient<SqlConnection>(c =>
 
 // DAL injections
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
+
+// BLL injections
+builder.Services.AddScoped<IPlayerService, PlayerService>();
 
 var app = builder.Build();
 
