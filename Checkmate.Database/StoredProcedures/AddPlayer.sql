@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [Person].[AddPlayer]
 (
-    @pseudo NVARCHAR(50),
+    @nickname NVARCHAR(50),
     @email NVARCHAR(500),
     @password NVARCHAR(1000),
     @birthdate DATETIME2,
@@ -15,7 +15,7 @@ BEGIN
 
     -- Insert the new player into the table
     INSERT INTO [Person].[Player] (Pseudo, Email, Password, BirthDate, Gender, Elo, Role)
-    VALUES (@pseudo, @email, @password, @birthdate, @gender, @elo, @role);
+    VALUES (@nickname, @email, @password, @birthdate, @gender, @elo, @role);
 
     -- Retrieve the ID of the newly inserted player
     SET @newPlayerId = SCOPE_IDENTITY();
