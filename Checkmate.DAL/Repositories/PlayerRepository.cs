@@ -27,9 +27,9 @@ namespace Checkmate.DAL.Repositories
 					command.Parameters.AddWithValue("@email", entity.Email);
 					command.Parameters.AddWithValue("@password", entity.Password);
 					command.Parameters.AddWithValue("@birthDate", entity.BirthDate);
-					command.Parameters.AddWithValue("@gender", entity.Gender);
+					command.Parameters.AddWithValue("@gender", (char)entity.Gender);
 					command.Parameters.AddWithValue("@elo", entity.ELO);
-					command.Parameters.AddWithValue("@role", entity.Role);
+					command.Parameters.AddWithValue("@role", (char)entity.Role);
 
 					// Output parameter (new id)
 					SqlParameter outputParameter = new SqlParameter("@newPlayerId", SqlDbType.Int)
@@ -39,7 +39,9 @@ namespace Checkmate.DAL.Repositories
 					command.Parameters.Add(outputParameter);
 
 					// Execute
+					m_Connection.Open();
 					command.ExecuteNonQuery();
+					m_Connection.Close();
 
 					entity.Id = (int)outputParameter.Value;
 				}
@@ -48,6 +50,7 @@ namespace Checkmate.DAL.Repositories
 			}
 			catch (Exception ex)
 			{
+				Console.WriteLine(ex.Message);
 				throw new Exception("Error creating player", ex);
 			}
 		}

@@ -20,9 +20,14 @@ namespace Checkmate.BLL.Services
 			entity.Id = null;
 
 			// hash the password
-			entity.Password = Argon2.Hash(entity.Password);
+			string password = PasswordGenerator.GeneratePassword();
+			entity.Password = Argon2.Hash(password);
 
-			return m_PlayerRepository.Create(entity);
+			Player creadtedPlayer = m_PlayerRepository.Create(entity);
+
+			// create the player
+			creadtedPlayer.Password = password;
+			return creadtedPlayer;
 		}
 
 		public bool Delete(int entityKey)

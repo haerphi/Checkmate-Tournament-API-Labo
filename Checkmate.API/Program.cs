@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 // Dependancy injection
 builder.Services.AddTransient<SqlConnection>(c =>
-	new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
+	new SqlConnection(builder.Configuration.GetConnectionString("Default")));
 
 // DAL injections
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
