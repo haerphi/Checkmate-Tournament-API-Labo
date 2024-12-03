@@ -1,2 +1,5 @@
 ﻿CREATE SCHEMA [Person];
 GO
+
+CREATE SCHEMA [Game];
+GO

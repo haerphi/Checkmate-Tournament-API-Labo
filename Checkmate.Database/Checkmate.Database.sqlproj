@@ -69,6 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Schemas.sql" />
-    <Build Include="StoredProcedures\CreatePlayerFn.sql" />
+    <Build Include="StoredProcedures\AddPlayer.sql" />
+    <Build Include="Tables\Category.sql" />
+    <Build Include="Tables\Tournament.sql" />
+    <Build Include="Tables\MM_Tournament_Category.sql" />
   </ItemGroup>
 </Project>
