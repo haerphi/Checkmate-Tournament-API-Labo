@@ -69,6 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Schemas.sql" />
-    <Build Include="StoredProcedures\CreatePlayer.sql" />
+    <Build Include="StoredProcedures\CreatePlayerFn.sql" />
   </ItemGroup>
 </Project>
