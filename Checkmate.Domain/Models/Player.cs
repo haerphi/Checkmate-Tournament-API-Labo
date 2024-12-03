@@ -2,6 +2,13 @@
 
 namespace Checkmate.Domain.Models
 {
+	public class PlayerLight
+	{
+		public required int Id { get; set; }
+		public required string Nickname { get; set; }
+		public required int ELO { get; set; }
+	}
+
 	public class Player
 	{
 		public int? Id { get; set; } = null;
