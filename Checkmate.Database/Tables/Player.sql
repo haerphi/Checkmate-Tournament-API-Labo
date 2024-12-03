@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [Person].[Player]
 (
 	[Id] INT IDENTITY,
-    [Pseudo] NVARCHAR(50) NOT NULL, 
+    [Nickname] NVARCHAR(50) NOT NULL, 
     [Email] NVARCHAR(500) NOT NULL, 
     [Password] NVARCHAR(1000) NOT NULL, 
     [Birthdate] DATETIME2 NOT NULL, 
@@ -10,6 +10,6 @@
     [Role] CHAR(1) NOT NULL DEFAULT 'p',
 
     CONSTRAINT [PK_Player_Id] PRIMARY KEY ([Id]),
-    CONSTRAINT [UQ_Player_Pseudo] UNIQUE ([Pseudo]),
+    CONSTRAINT [UQ_Player_Nickname] UNIQUE ([Nickname]),
     CONSTRAINT [UQ_Player_Email] UNIQUE ([Email])
 )

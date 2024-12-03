@@ -7,7 +7,7 @@
 RETURNS @Result TABLE
 (
     Id INT,
-    Pseudo NVARCHAR(50),
+    Nickname NVARCHAR(50),
     ELO INT
 )
 AS
@@ -32,10 +32,10 @@ BEGIN
 
     -- Insert the result into the return table
     INSERT INTO @Result
-    SELECT p.[Id], p.[Pseudo], p.[ELO]
+    SELECT p.[Id] as [Id], p.[Nickname] as [Nickname], p.[ELO] as [ELO]
     FROM [Person].[Player] AS p
     WHERE p.[ELO] BETWEEN @tournamentELOmin AND @tournamentELOmax
-    ORDER BY p.[Pseudo] DESC
+    ORDER BY p.[Nickname] DESC
     OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY;
 
     RETURN;

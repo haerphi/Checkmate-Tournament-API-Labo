@@ -14,7 +14,7 @@ BEGIN
     SET NOCOUNT ON;
 
     -- Insert the new player into the table
-    INSERT INTO [Person].[Player] (Pseudo, Email, Password, BirthDate, Gender, Elo, Role)
+    INSERT INTO [Person].[Player] (Nickname, Email, Password, BirthDate, Gender, Elo, Role)
     VALUES (@nickname, @email, @password, @birthdate, @gender, @elo, @role);
 
     -- Retrieve the ID of the newly inserted player
