@@ -16,7 +16,6 @@
 	[EndInscriptionAt] DATETIME2 NOT NULL,
 
 	CONSTRAINT [PK_Tournament_Id] PRIMARY KEY ([Id]),
-	CONSTRAINT [UQ_Tournament_Name] UNIQUE ([Name]),
 	CONSTRAINT [CK_Tournament_MinPlayer_MaxPlayer] CHECK ([MinPlayer] <= [MaxPlayer]),
 	CONSTRAINT [CK_Tournament_MinPlayer_MaxPlayer_Count] CHECK([MinPlayer] BETWEEN 2 AND 32 AND [MaxPlayer] BETWEEN 2 AND 32),
 	CONSTRAINT [CK_Tournament_MinElo_MaxElo] CHECK ([MinElo] <= [MaxElo]),
