@@ -36,7 +36,7 @@ namespace Checkmate.API.Controllers
 				MailReceiver mailReceiver = new MailReceiver(createdPlayer.Nickname, createdPlayer.Email);
 				m_MailHelperService.SendMail(mailReceiver, MailTemplate.WelcomeMail, createdPlayer);
 
-				return createdPlayer.ToPlayerDTO();
+				return CreatedAtRoute(new { id = createdPlayer.Id }, createdPlayer.ToPlayerDTO());
 			}
 			catch (Exception e)
 			{
@@ -56,6 +56,12 @@ namespace Checkmate.API.Controllers
 			{
 				return Problem(e.Message);
 			}
+		}
+
+		[HttpGet("{id}", Name = "GetById")]
+		public ActionResult<PlayerDTO> GetById(int id)
+		{
+			return Ok(id);
 		}
 	}
 }
