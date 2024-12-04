@@ -4,7 +4,7 @@
 	{
 		public static string GeneratePassword()
 		{
-			return "password";
+			return Guid.NewGuid().ToString();
 		}
 	}
 }
