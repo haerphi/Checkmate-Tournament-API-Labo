@@ -16,7 +16,7 @@ namespace Checkmate.API.Mappers
 				MinElo = tournamentCreateDTO.MinElo,
 				MaxElo = tournamentCreateDTO.MaxElo,
 				IsWomenOnly = tournamentCreateDTO.IsWomenOnly,
-				EndInscriptionAt = tournamentCreateDTO.EndInscriptionAt is null ? new DateTime(0) : (DateTime)tournamentCreateDTO.EndInscriptionAt,
+				EndInscriptionAt = tournamentCreateDTO.EndInscriptionAt is null ? DateTime.MinValue : (DateTime)tournamentCreateDTO.EndInscriptionAt,
 				Categories = tournamentCreateDTO.Categories.Select(c => new Category { Name = c }).ToList()
 			};
 		}

@@ -1,6 +1,7 @@
 ﻿using Checkmate.API.DTO.Tournament;
 using Checkmate.API.Mappers;
 using Checkmate.BLL.Services.Interfaces;
+using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +31,10 @@ namespace Checkmate.API.Controllers
 				Tournament createdTournament = m_TournamentService.Create(tournamentDTO.ToTournament());
 
 				return createdTournament.ToTournamentDTO();
+			}
+			catch (InvalidEndOfInscriptionDateException e)
+			{
+				return BadRequest(new { error = "TOURNAMENT_ADD_INVALID_END_OF_INSCRIPTION_DATE" });
 			}
 			catch (Exception e)
 			{

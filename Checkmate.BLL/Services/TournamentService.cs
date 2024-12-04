@@ -1,5 +1,6 @@
 ﻿using Checkmate.BLL.Services.Interfaces;
 using Checkmate.DAL.Repositories.Interfaces;
+using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Utils;
 
@@ -17,6 +18,20 @@ namespace Checkmate.BLL.Services
 		public Tournament Create(Tournament entity)
 		{
 			entity.Id = null;
+
+			// if the entity.EndInscriptionAt is 0, thake the day of the day and add the max number of player
+			if (entity.EndInscriptionAt == DateTime.MinValue)
+			{
+				entity.EndInscriptionAt = DateTime.Now.AddDays(entity.MaxPlayer);
+			}
+			else
+			{
+				DateTime tmpDate = DateTime.Now.AddDays(entity.MaxPlayer);
+				if (entity.EndInscriptionAt < tmpDate)
+				{
+					throw new InvalidEndOfInscriptionDateException();
+				}
+			}
 
 			return m_TournamentRepository.Create(entity);
 		}
