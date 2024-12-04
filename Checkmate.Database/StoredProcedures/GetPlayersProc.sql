@@ -1,17 +1,13 @@
-﻿CREATE FUNCTION [Person].[GetPlayersFn]
+﻿CREATE PROCEDURE [Person].[GetPlayersProc]
 (
     @offset INT = 0,
     @limit INT = 10,
     @tournamentId INT = NULL
 )
-RETURNS @Result TABLE
-(
-    Id INT,
-    Nickname NVARCHAR(50),
-    ELO INT
-)
 AS
 BEGIN
+    SET NOCOUNT ON;
+
     DECLARE @tournamentELOmin INT;
     DECLARE @tournamentELOmax INT;
 
@@ -30,14 +26,13 @@ BEGIN
         SET @tournamentELOmax = 9999;  -- Maximum possible ELO (or any upper limit)
     END
 
-    -- Insert the result into the return table
-    INSERT INTO @Result
-    SELECT p.[Id] as [Id], p.[Nickname] as [Nickname], p.[ELO] as [ELO]
+    -- Select and output the result set
+    SELECT p.[Id] AS [Id], 
+           p.[Nickname] AS [Nickname], 
+           p.[ELO] AS [ELO]
     FROM [Person].[Player] AS p
     WHERE p.[ELO] BETWEEN @tournamentELOmin AND @tournamentELOmax
     ORDER BY p.[Nickname] DESC
     OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY;
-
-    RETURN;
 END;
 GO

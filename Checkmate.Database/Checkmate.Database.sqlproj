@@ -59,10 +59,12 @@
     <Folder Include="Profiles" />
     <Folder Include="Tables" />
     <Folder Include="StoredProcedures" />
+    <Folder Include="Data" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Db_Setup-script.sql" />
     <Build Include="Tables\Player.sql" />
+    <None Include="Data\DataToInsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="profiles\Checkmate.Database.publish.xml" />
@@ -73,7 +75,7 @@
     <Build Include="Tables\Category.sql" />
     <Build Include="Tables\Tournament.sql" />
     <Build Include="Tables\MM_Tournament_Category.sql" />
-    <Build Include="StoredProcedures\GetPlayersFn.sql" />
+    <Build Include="StoredProcedures\GetPlayersProc.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Checkmate.Database.refactorlog" />

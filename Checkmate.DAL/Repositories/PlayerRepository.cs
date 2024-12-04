@@ -64,17 +64,21 @@ namespace Checkmate.DAL.Repositories
 		{
 			try
 			{
-				using (SqlCommand command = new SqlCommand("[Person].[GetPlayersFn]", m_Connection))
+				using (SqlCommand command = new SqlCommand("[Person].[GetPlayersProc]", m_Connection))
 				{
 					// Parameters
 					command.CommandType = CommandType.StoredProcedure;
-					command.Parameters.AddWithValue("@page", pagination.Page);
-					command.Parameters.AddWithValue("@pageSize", pagination.PageSize);
-					command.Parameters.AddWithValue("@tournamentId", tournamentId);
+
+					command.Parameters.AddWithValue("@offset", pagination.Offset); // Use @offset
+					command.Parameters.AddWithValue("@limit", pagination.Limit); // Use @limit
+					command.Parameters.AddWithValue("@tournamentId", tournamentId ?? (object)DBNull.Value); // Handle NULL values
+
+					List<PlayerLight> players = new List<PlayerLight>();
+
 					// Execute
+					m_Connection.Open();
 					using (SqlDataReader reader = command.ExecuteReader())
 					{
-						List<PlayerLight> players = new List<PlayerLight>();
 						while (reader.Read())
 						{
 							players.Add(new PlayerLight
@@ -84,13 +88,14 @@ namespace Checkmate.DAL.Repositories
 								ELO = (int)reader["ELO"],
 							});
 						}
-
-						return players;
 					}
+					return players;
 				}
 			}
 			catch (Exception ex)
 			{
+				Console.WriteLine(ex.Message);
+				m_Connection.Close();
 				throw new Exception("Error getting players", ex);
 			}
 		}

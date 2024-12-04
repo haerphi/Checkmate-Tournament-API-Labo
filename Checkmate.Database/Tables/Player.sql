@@ -11,5 +11,6 @@
 
     CONSTRAINT [PK_Player_Id] PRIMARY KEY ([Id]),
     CONSTRAINT [UQ_Player_Nickname] UNIQUE ([Nickname]),
-    CONSTRAINT [UQ_Player_Email] UNIQUE ([Email])
+    CONSTRAINT [UQ_Player_Email] UNIQUE ([Email]),
+    CONSTRAINT [CK_Player_ELO] CHECK ([ELO] >= 0 AND [ELO] <= 3000),
 )
