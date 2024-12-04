@@ -76,6 +76,7 @@
     <Build Include="Tables\Tournament.sql" />
     <Build Include="Tables\MM_Tournament_Category.sql" />
     <Build Include="StoredProcedures\GetPlayersProc.sql" />
+    <Build Include="StoredProcedures\CreateTournament.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Checkmate.Database.refactorlog" />
