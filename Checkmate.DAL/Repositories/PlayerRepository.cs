@@ -86,6 +86,7 @@ namespace Checkmate.DAL.Repositories
 								Id = (int)reader["Id"],
 								Nickname = (string)reader["Nickname"],
 								ELO = (int)reader["ELO"],
+								Email = (string)reader["Email"]
 							});
 						}
 					}

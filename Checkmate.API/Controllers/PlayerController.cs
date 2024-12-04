@@ -1,6 +1,7 @@
 ﻿using Checkmate.API.DTO.Player;
 using Checkmate.API.Mappers;
 using Checkmate.API.Services;
+using Checkmate.API.Services.Mails;
 using Checkmate.BLL.Services.Interfaces;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Utils;
@@ -32,7 +33,8 @@ namespace Checkmate.API.Controllers
 			try
 			{
 				Player createdPlayer = m_PlayerService.Create(playerDTO.ToPlayer());
-				m_MailHelperService.SendWelcome(createdPlayer);
+				MailReceiver mailReceiver = new MailReceiver(createdPlayer.Nickname, createdPlayer.Email);
+				m_MailHelperService.SendMail(mailReceiver, MailTemplate.WelcomeMail, createdPlayer);
 
 				return createdPlayer.ToPlayerDTO();
 			}

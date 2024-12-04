@@ -29,7 +29,8 @@ BEGIN
     -- Select and output the result set
     SELECT p.[Id] AS [Id], 
            p.[Nickname] AS [Nickname], 
-           p.[ELO] AS [ELO]
+           p.[ELO] AS [ELO],
+           p.[Email] as [Email]
     FROM [Person].[Player] AS p
     WHERE p.[ELO] BETWEEN @tournamentELOmin AND @tournamentELOmax
     ORDER BY p.[Nickname] DESC
