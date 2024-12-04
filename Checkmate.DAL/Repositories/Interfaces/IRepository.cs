@@ -11,6 +11,6 @@ namespace Checkmate.DAL.Interfaces
 
 		public Complete Update(Complete entity);
 
-		public void Delete(Key id);
+		public void Delete(Key id, bool paranoid = true);
 	}
 }

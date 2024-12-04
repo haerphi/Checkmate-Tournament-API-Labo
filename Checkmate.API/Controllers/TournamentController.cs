@@ -59,5 +59,22 @@ namespace Checkmate.API.Controllers
 				return Problem(e.Message);
 			}
 		}
+
+		[HttpDelete("{id}", Name = "DeleteTournament")]
+		public ActionResult Delete(int id)
+		{
+			try
+			{
+				m_TournamentService.Delete(id);
+
+				// TODO send mail to all players
+
+				return Ok();
+			}
+			catch (Exception e)
+			{
+				return Problem(e.Message);
+			}
+		}
 	}
 }

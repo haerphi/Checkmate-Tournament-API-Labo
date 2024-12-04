@@ -55,7 +55,7 @@ namespace Checkmate.DAL.Repositories
 			}
 		}
 
-		public void Delete(int id)
+		public void Delete(int id, bool paranoid = true)
 		{
 			throw new NotImplementedException();
 		}

@@ -38,7 +38,8 @@ namespace Checkmate.BLL.Services
 
 		public bool Delete(int entityKey)
 		{
-			throw new NotImplementedException();
+			m_TournamentRepository.Delete(entityKey);
+			return true;
 		}
 
 		public IEnumerable<TournamentLight> GetAll(Pagination pagination)

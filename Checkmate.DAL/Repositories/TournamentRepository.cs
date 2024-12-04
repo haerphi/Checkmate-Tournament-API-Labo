@@ -54,9 +54,27 @@ namespace Checkmate.DAL.Repositories
 			}
 		}
 
-		public void Delete(int id)
+		public void Delete(int id, bool paranoid = true)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				using (SqlCommand command = new SqlCommand("[Game].[CancelTournament]", m_Connection))
+				{
+					// Parameters
+					command.CommandType = CommandType.StoredProcedure;
+					command.Parameters.AddWithValue("@tournamentId", id);
+					command.Parameters.AddWithValue("@paranoid", paranoid);
+					// Execute
+					m_Connection.Open();
+					command.ExecuteNonQuery();
+					m_Connection.Close();
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw new Exception("Error deleting tournament", ex);
+			}
 		}
 
 		public IEnumerable<TournamentLight> GetAll(Pagination pagination)
