@@ -22,7 +22,7 @@ namespace Checkmate.API.Controllers
 		}
 
 		[HttpPost(Name = "CreatePlayer")]
-		public ActionResult<PlayerDTO> Create([FromBody] PlayerCreateDTO player)
+		public ActionResult<PlayerDTO> Create([FromBody] PlayerCreateDTO playerDTO)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -31,7 +31,7 @@ namespace Checkmate.API.Controllers
 
 			try
 			{
-				Player createdPlayer = m_PlayerService.Create(player.ToPlayer());
+				Player createdPlayer = m_PlayerService.Create(playerDTO.ToPlayer());
 				m_MailHelperService.SendWelcome(createdPlayer);
 
 				return createdPlayer.ToPlayerDTO();
