@@ -2,6 +2,17 @@
 
 namespace Checkmate.Domain.Models
 {
+	public class TournamentLight
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public TournamentStatusEnum Status { get; set; }
+		public int CurrentRound { get; set; }
+		public bool IsWomenOnly { get; set; } = false;
+		public DateTime EndInscriptionAt { get; set; } = DateTime.Now;
+		public IEnumerable<Category> Categories { get; set; } = [];
+	}
+
 	public class Tournament
 	{
 		public int? Id { get; set; } = null;
@@ -18,5 +29,6 @@ namespace Checkmate.Domain.Models
 		public DateTime UpdatedAt { get; set; } = DateTime.Now;
 		public DateTime? DeletedAt { get; set; } = DateTime.Now;
 		public DateTime EndInscriptionAt { get; set; } = DateTime.Now;
+		public IEnumerable<Category> Categories { get; set; } = [];
 	}
 }
