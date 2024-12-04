@@ -3,6 +3,7 @@ using Checkmate.BLL.Services;
 using Checkmate.BLL.Services.Interfaces;
 using Checkmate.DAL.Interfaces;
 using Checkmate.DAL.Repositories;
+using Checkmate.DAL.Repositories.Interfaces;
 using Microsoft.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,9 +23,11 @@ builder.Services.AddTransient<MailHelperService>();
 
 // DAL injections
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
+builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
 
 // BLL injections
 builder.Services.AddScoped<IPlayerService, PlayerService>();
+builder.Services.AddScoped<ITournamentService, TournamentService>();
 
 var app = builder.Build();
 
