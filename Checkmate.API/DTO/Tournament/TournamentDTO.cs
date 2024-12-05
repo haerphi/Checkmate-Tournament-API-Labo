@@ -1,10 +1,12 @@
-﻿namespace Checkmate.API.DTO.Tournament
+﻿using Checkmate.Domain.Enums;
+
+namespace Checkmate.API.DTO.Tournament
 {
 	public class TournamentLightDTO
 	{
 		public required int Id { get; set; }
 		public required string Name { get; set; }
-		public required string Status { get; set; }
+		public required TournamentStatusEnum Status { get; set; }
 		public required int CurrentRound { get; set; }
 		public required bool IsWomenOnly { get; set; } = false;
 		public required DateTime EndInscriptionAt { get; set; } = DateTime.Now;
@@ -19,7 +21,7 @@
 		public required int MaxPlayer { get; set; }
 		public required int MinElo { get; set; }
 		public required int MaxElo { get; set; }
-		public required string Status { get; set; }
+		public required TournamentStatusEnum Status { get; set; }
 		public required int CurrentRound { get; set; }
 		public required bool IsWomenOnly { get; set; }
 		public required DateTime CreatedAt { get; set; }

@@ -1,5 +1,4 @@
 ﻿using Checkmate.API.DTO.Player;
-using Checkmate.Domain.Enums;
 using Checkmate.Domain.Models;
 
 namespace Checkmate.API.Mappers
@@ -8,14 +7,12 @@ namespace Checkmate.API.Mappers
 	{
 		public static Player ToPlayer(this PlayerCreateDTO dto)
 		{
-			GenderEnum gender = (GenderEnum)Enum.Parse(typeof(GenderEnum), dto.Gender);
-
 			return new Player()
 			{
 				Nickname = dto.Nickname,
 				Email = dto.Email,
 				BirthDate = dto.BirthDate,
-				Gender = gender,
+				Gender = dto.Gender,
 				ELO = dto.ELO
 			};
 		}
@@ -28,7 +25,7 @@ namespace Checkmate.API.Mappers
 				Nickname = player.Nickname,
 				Email = player.Email,
 				BirthDate = player.BirthDate,
-				Gender = Enum.GetName(player.Gender)!,
+				Gender = player.Gender,
 				ELO = player.ELO,
 				Role = Enum.GetName(player.Role)!
 			};
