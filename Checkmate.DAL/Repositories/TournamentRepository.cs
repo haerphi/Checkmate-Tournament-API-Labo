@@ -92,16 +92,57 @@ namespace Checkmate.DAL.Repositories
 			}
 		}
 
-		public IEnumerable<TournamentLight> GetAll(Pagination pagination)
+
+
+		public IEnumerable<TournamentLight> GetAll(TournamentPagination pagination)
 		{
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<TournamentLight> GetAllActive(Pagination pagination)
+		public IEnumerable<TournamentLight> GetAll(Pagination pagination)
 		{
-			string query = @"
+			return GetAll(new TournamentPagination(pagination.Offset, pagination.Limit));
+		}
+
+		public IEnumerable<TournamentLight> GetAllActive(TournamentPagination pagination)
+		{
+			List<string> conditions = [];
+			if (pagination.Name != null)
+			{
+				conditions.Add("Name LIKE '%' + @name + '%'");
+			}
+			if (pagination.Status != null)
+			{
+				conditions.Add("Status = @status");
+			}
+			if (pagination.Address != null)
+			{
+				conditions.Add("Address LIKE '%' + @address + '%'");
+			}
+			if (pagination.Categories.Length > 0)
+			{
+
+				foreach (string category in pagination.Categories)
+				{
+					conditions.Add(@$"
+						EXISTS (
+							SELECT 1
+							FROM STRING_SPLIT(t.Categories, ',')
+							WHERE value = @{category}_str
+						)");
+				}
+			}
+
+			string where = "";
+			if (conditions.Count > 0)
+			{
+				where = "WHERE " + string.Join(" AND ", conditions);
+			}
+
+			string query = @$"
 			SELECT Id, Name, Address, MinPlayer, MaxPlayer, Categories, MinElo, MaxElo, Status, EndInscriptionAt, CurrentRound, CreatedAt, UpdatedAt
-				FROM [Game].[V_ActiveTournaments]
+				FROM [Game].[V_ActiveTournaments] AS t
+				{where}
 				ORDER BY CreatedAt DESC
 					OFFSET @offset ROWS
 					FETCH NEXT @limit ROWS ONLY;";
@@ -114,6 +155,27 @@ namespace Checkmate.DAL.Repositories
 
 					command.Parameters.AddWithValue("@offset", pagination.Offset);
 					command.Parameters.AddWithValue("@limit", pagination.Limit);
+
+					if (pagination.Name != null)
+					{
+						command.Parameters.AddWithValue("@name", pagination.Name);
+					}
+					if (pagination.Status != null)
+					{
+						command.Parameters.AddWithValue("@status", Enum.GetName((TournamentStatusEnum)pagination.Status));
+					}
+					if (pagination.Address != null)
+					{
+						command.Parameters.AddWithValue("@address", pagination.Address);
+					}
+					if (pagination.Categories.Length > 0)
+					{
+
+						foreach (string category in pagination.Categories)
+						{
+							command.Parameters.AddWithValue($"@{category}_str", category);
+						}
+					}
 
 					List<TournamentLight> tournaments = new List<TournamentLight>();
 

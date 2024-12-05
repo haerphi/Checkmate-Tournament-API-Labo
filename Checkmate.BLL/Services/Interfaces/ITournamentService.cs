@@ -8,6 +8,6 @@ namespace Checkmate.BLL.Services.Interfaces
 		public Tournament Create(Tournament entity);
 		public bool Delete(int entityKey);
 
-		public IEnumerable<TournamentLight> GetAllActive(Pagination pagination);
+		public IEnumerable<TournamentLight> GetAllActive(TournamentPagination pagination);
 	}
 }

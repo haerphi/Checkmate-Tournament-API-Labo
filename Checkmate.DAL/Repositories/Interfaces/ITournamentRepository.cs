@@ -6,6 +6,7 @@ namespace Checkmate.DAL.Repositories.Interfaces
 {
 	public interface ITournamentRepository : IRepository<int, Tournament, TournamentLight>
 	{
-		public IEnumerable<TournamentLight> GetAllActive(Pagination pagination);
+		public IEnumerable<TournamentLight> GetAll(TournamentPagination pagination);
+		public IEnumerable<TournamentLight> GetAllActive(TournamentPagination pagination);
 	}
 }
