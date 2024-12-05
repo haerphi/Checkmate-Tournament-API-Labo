@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Checkmate.Domain.Core;
+using System.ComponentModel.DataAnnotations;
 
 namespace Checkmate.API.DTO.Tournament
 {
@@ -13,21 +14,21 @@ namespace Checkmate.API.DTO.Tournament
 		public required string Address { get; set; }
 
 		[Required]
-		[Range(2, 32)]
+		[Range(GameRule.MinPlayers, GameRule.MaxPlayers)]
 		// TODO Check that min player is less or equal than max player
 		public int MinPlayer { get; set; }
 
 		[Required]
-		[Range(2, 32)]
+		[Range(GameRule.MinPlayers, GameRule.MaxPlayers)]
 		public int MaxPlayer { get; set; }
 
 		[Required]
-		[Range(0, 3000)]
+		[Range(GameRule.MinElo, GameRule.MaxElo)]
 		// TODO Check that min elo is less or equal than max elo
 		public int MinElo { get; set; }
 
 		[Required]
-		[Range(0, 3000)]
+		[Range(GameRule.MinElo, GameRule.MaxElo)]
 		public int MaxElo { get; set; }
 
 		public bool IsWomenOnly { get; set; } = false;
