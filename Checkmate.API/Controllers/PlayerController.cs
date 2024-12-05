@@ -3,6 +3,7 @@ using Checkmate.API.Mappers;
 using Checkmate.API.Services;
 using Checkmate.API.Services.Mails;
 using Checkmate.BLL.Services.Interfaces;
+using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,10 @@ namespace Checkmate.API.Controllers
 				m_MailHelperService.SendMail(mailReceiver, MailTemplate.WelcomeMail, createdPlayer);
 
 				return CreatedAtRoute(new { id = createdPlayer.Id }, createdPlayer.ToPlayerDTO());
+			}
+			catch (Exception e) when (e is NicknameAlreadyUsedException || e is EmailAlreadyUsedException || e is EloRangeException)
+			{
+				return BadRequest(new { error = e.Message });
 			}
 			catch (Exception e)
 			{

@@ -51,7 +51,7 @@ namespace Checkmate.DAL.Repositories
 			}
 			catch (SqlException ex)
 			{
-				switch (ex.ErrorCode)
+				switch (ex.Number)
 				{
 					case 50001:
 						throw new NicknameAlreadyUsedException();
@@ -125,6 +125,70 @@ namespace Checkmate.DAL.Repositories
 		public Player GetById(int id)
 		{
 			throw new NotImplementedException();
+		}
+
+		public bool IsEmailAlreadyUsed(string email)
+		{
+			try
+			{
+				using (SqlCommand command = new SqlCommand("[Person].[IsEmailAlreadyUsed]", m_Connection))
+				{
+					command.CommandType = CommandType.StoredProcedure;
+
+					command.Parameters.AddWithValue("@email", email);
+
+					// Output parameter (boolean result)
+					SqlParameter outputParameter = new SqlParameter("@result", SqlDbType.Bit)
+					{
+						Direction = ParameterDirection.Output
+					};
+					command.Parameters.Add(outputParameter);
+
+					// Execute
+					m_Connection.Open();
+					command.ExecuteNonQuery();
+					m_Connection.Close();
+
+					return (bool)outputParameter.Value;
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw new Exception("Error checking email", e);
+			}
+		}
+
+		public bool IsNicknameAlreadyUsed(string nickname)
+		{
+			try
+			{
+				using (SqlCommand command = new SqlCommand("[Person].[IsNicknameAlreadyUsed]", m_Connection))
+				{
+					command.CommandType = CommandType.StoredProcedure;
+
+					command.Parameters.AddWithValue("@nickname", nickname);
+
+					// Output parameter (boolean result)
+					SqlParameter outputParameter = new SqlParameter("@result", SqlDbType.Bit)
+					{
+						Direction = ParameterDirection.Output
+					};
+					command.Parameters.Add(outputParameter);
+
+					// Execute
+					m_Connection.Open();
+					command.ExecuteNonQuery();
+					m_Connection.Close();
+
+					return (bool)outputParameter.Value;
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw new Exception("Error checking nickname", e);
+			}
 		}
 
 		public Player Update(Player Entity)
