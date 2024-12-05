@@ -1,6 +1,6 @@
 ﻿using Checkmate.DAL.Interfaces;
 using Checkmate.Domain.Models;
-using Checkmate.Domain.Utils;
+using Checkmate.Domain.Models.Paginations;
 
 namespace Checkmate.DAL.Repositories.Interfaces
 {

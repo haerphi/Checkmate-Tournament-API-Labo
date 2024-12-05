@@ -2,6 +2,7 @@
 using Checkmate.DAL.Interfaces;
 using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Models;
+using Checkmate.Domain.Models.Paginations;
 using Checkmate.Domain.Utils;
 using Isopoh.Cryptography.Argon2;
 

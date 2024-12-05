@@ -1,4 +1,4 @@
-﻿using Checkmate.Domain.Utils;
+﻿using Checkmate.Domain.Models.Paginations;
 
 namespace Checkmate.DAL.Interfaces
 {

@@ -1,4 +1,4 @@
-﻿namespace Checkmate.Domain.Utils
+﻿namespace Checkmate.Domain.Models.Paginations
 {
 	public class Pagination
 	{

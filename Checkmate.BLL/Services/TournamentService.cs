@@ -2,7 +2,7 @@
 using Checkmate.DAL.Repositories.Interfaces;
 using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Models;
-using Checkmate.Domain.Utils;
+using Checkmate.Domain.Models.Paginations;
 
 namespace Checkmate.BLL.Services
 {

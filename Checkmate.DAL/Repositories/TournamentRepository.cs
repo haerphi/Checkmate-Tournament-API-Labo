@@ -2,7 +2,7 @@
 using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Enums;
 using Checkmate.Domain.Models;
-using Checkmate.Domain.Utils;
+using Checkmate.Domain.Models.Paginations;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
