@@ -10,5 +10,7 @@
 			Offset = offset;
 			Limit = limit;
 		}
+
+		public Pagination() { }
 	}
 }
