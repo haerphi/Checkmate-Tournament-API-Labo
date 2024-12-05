@@ -1,4 +1,5 @@
 ﻿using Checkmate.DAL.Repositories.Interfaces;
+using Checkmate.Domain.Enums;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Utils;
 using Microsoft.Data.SqlClient;
@@ -80,6 +81,62 @@ namespace Checkmate.DAL.Repositories
 		public IEnumerable<TournamentLight> GetAll(Pagination pagination)
 		{
 			throw new NotImplementedException();
+		}
+
+		public IEnumerable<TournamentLight> GetAllActive(Pagination pagination)
+		{
+			string query = @"
+			SELECT Id, Name, Address, MinPlayer, MaxPlayer, Categories, MinElo, MaxElo, Status, EndInscriptionAt, CurrentRound, CreatedAt, UpdatedAt
+				FROM [Game].[V_ActiveTournaments]
+				ORDER BY CreatedAt DESC
+					OFFSET @offset ROWS
+					FETCH NEXT @limit ROWS ONLY;";
+
+			try
+			{
+				using (SqlCommand command = new SqlCommand(query, m_Connection))
+				{
+					command.CommandType = CommandType.Text;
+
+					command.Parameters.AddWithValue("@offset", pagination.Offset);
+					command.Parameters.AddWithValue("@limit", pagination.Limit);
+
+					List<TournamentLight> tournaments = new List<TournamentLight>();
+
+					// Execute
+					m_Connection.Open();
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							tournaments.Add(new TournamentLight
+							{
+								Id = (int)reader["Id"],
+								Name = (string)reader["Name"],
+								Address = (string)reader["Address"],
+								// TODO current nbr of registered players
+								MinPlayer = (int)reader["MinPlayer"],
+								MaxPlayer = (int)reader["MaxPlayer"],
+								Categories = (string)reader["Categories"],
+								MinElo = (int)reader["MinElo"],
+								MaxElo = (int)reader["MaxElo"],
+								Status = Enum.Parse<TournamentStatusEnum>((string)reader["Status"]),
+								EndInscriptionAt = (DateTime)reader["EndInscriptionAt"],
+								CurrentRound = (int)reader["CurrentRound"],
+								CreatedAt = (DateTime)reader["CreatedAt"],
+								UpdatedAt = (DateTime)reader["UpdatedAt"]
+							});
+						}
+					}
+					m_Connection.Close();
+					return tournaments;
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+				throw new Exception("Error retreiving tournament", ex);
+			}
 		}
 
 		public Tournament GetById(int id)

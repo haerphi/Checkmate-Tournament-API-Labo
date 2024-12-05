@@ -42,5 +42,32 @@ namespace Checkmate.API.Mappers
 				Categories = tournament.Categories.Select(c => c.Name).ToArray()
 			};
 		}
+
+		public static TournamentLightDTO ToTournamentActiveLightDTO(this TournamentLight tournament)
+		{
+			return new TournamentLightDTO
+			{
+				Id = tournament.Id,
+				Name = tournament.Name,
+				Address = tournament.Address,
+				MinPlayer = tournament.MinPlayer,
+				MaxPlayer = tournament.MaxPlayer,
+				Categories = tournament.Categories,
+				MinElo = tournament.MinElo,
+				MaxElo = tournament.MaxElo,
+				Status = tournament.Status,
+				EndInscriptionAt = tournament.EndInscriptionAt,
+				CurrentRound = tournament.CurrentRound,
+			};
+		}
+
+		public static TournamentLightDTO ToTournamentLightDTO(this TournamentLight tournament)
+		{
+			TournamentLightDTO tournamentLightDTO = tournament.ToTournamentActiveLightDTO();
+			tournamentLightDTO.CreatedAt = tournament.CreatedAt;
+			tournamentLightDTO.UpdatedAt = tournament.UpdatedAt;
+
+			return tournamentLightDTO;
+		}
 	}
 }

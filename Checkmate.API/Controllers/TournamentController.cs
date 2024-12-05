@@ -76,5 +76,18 @@ namespace Checkmate.API.Controllers
 				return Problem(e.Message);
 			}
 		}
+
+		[HttpGet(Name = "GetAllActiveTournaments")]
+		public ActionResult<IEnumerable<TournamentLightDTO>> GetAllActive([FromQuery] Pagination? pagination)
+		{
+			try
+			{
+				return m_TournamentService.GetAllActive(pagination).Select(t => t.ToTournamentActiveLightDTO()).ToList();
+			}
+			catch (Exception e)
+			{
+				return Problem(e.Message);
+			}
+		}
 	}
 }

@@ -2,6 +2,7 @@
 using Checkmate.DAL.Repositories.Interfaces;
 using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Models;
+using Checkmate.Domain.Utils;
 
 namespace Checkmate.BLL.Services
 {
@@ -39,6 +40,11 @@ namespace Checkmate.BLL.Services
 		{
 			m_TournamentRepository.Delete(entityKey);
 			return true;
+		}
+
+		public IEnumerable<TournamentLight> GetAllActive(Pagination pagination)
+		{
+			return m_TournamentRepository.GetAllActive(pagination);
 		}
 	}
 }

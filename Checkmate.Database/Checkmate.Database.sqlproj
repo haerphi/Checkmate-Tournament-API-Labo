@@ -61,11 +61,14 @@
     <Folder Include="StoredProcedures" />
     <Folder Include="Data" />
     <Folder Include="Views" />
+    <Folder Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Db_Setup-script.sql" />
     <Build Include="Tables\Player.sql" />
     <None Include="Data\DataToInsert.sql" />
+    <Build Include="System\InsertCustomErrors.sql" />
+    <Build Include="StoredProcedures\IsNicknameAlreadyUsed.sql" />
+    <Build Include="StoredProcedures\IsEmailAlreadyUsed.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="profiles\Checkmate.Database.publish.xml" />
@@ -79,7 +82,8 @@
     <Build Include="StoredProcedures\GetPlayersProc.sql" />
     <Build Include="StoredProcedures\CreateTournament.sql" />
     <Build Include="StoredProcedures\CancelTournament.sql" />
-    <Build Include="Views\V_ActiveTournament.sql" />
+    <Build Include="Views\V_ActiveTournaments.sql" />
+    <None Include="System\Db_Setup-script.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Checkmate.Database.refactorlog" />

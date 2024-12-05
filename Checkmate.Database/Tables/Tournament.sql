@@ -7,7 +7,7 @@
 	[MaxPlayer] INT NOT NULL,
 	[MinElo] INT NOT NULL,
 	[MaxElo] INT NOT NULL,
-	[Status] NVARCHAR(20) NOT NULL DEFAULT 'waiting',
+	[Status] NVARCHAR(20) NOT NULL DEFAULT 'Waiting',
 	[CurrentRound] INT NOT NULL DEFAULT 0,
 	[IsWomenOnly] BIT NOT NULL DEFAULT 0,
 	[CreatedAt] DATETIME2 NOT NULL DEFAULT GETDATE(),
