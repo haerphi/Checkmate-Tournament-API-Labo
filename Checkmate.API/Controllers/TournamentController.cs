@@ -50,6 +50,10 @@ namespace Checkmate.API.Controllers
 
 				return createdTournament.ToTournamentDTO();
 			}
+			catch (InvalidDataParamsException e)
+			{
+				return BadRequest(new { error = e.Message });
+			}
 			catch (InvalidEndOfInscriptionDateException e)
 			{
 				return BadRequest(new { error = "TOURNAMENT_ADD_INVALID_END_OF_INSCRIPTION_DATE" });

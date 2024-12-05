@@ -59,19 +59,25 @@ BEGIN
 		-- check if the minimum number of players is less than the maximum number of players
 		IF @MinPlayer > @MaxPlayer
 		BEGIN
-			RAISERROR  (50000, -1, -1, 'Minimum number of players cannot be greater than Maximum number of players');
+			RAISERROR  (50004, -1, -1);
+			ROLLBACK;
+			RETURN;
 		END
 
 		-- Check if the minimum ELO is less than the maximum ELO
 		IF @MinElo > @MaxElo
 		BEGIN
-			RAISERROR  (50000, -1, -1, 'Minimum ELO cannot be greater than Maximum ELO');
+			RAISERROR  (50005, -1, -1);
+			ROLLBACK;
+			RETURN;
 		END
 
 		-- Check if the end inscription date is in the future
 		IF @EndInscriptionAt < GETDATE()
 		BEGIN
-			RAISERROR  (50000, -1, -1, 'End inscription date must be in the future');
+			RAISERROR  (50006, -1, -1);
+			ROLLBACK;
+			RETURN;
 		END
 
 	/* INSERTIONS */
@@ -107,7 +113,6 @@ BEGIN
 		if @error > 0
 		BEGIN
 			ROLLBACK;
-			RAISERROR  (50000, -1, -1, 'Fail to insert in MM');
 			RETURN;
 		END
 	COMMIT;

@@ -1,4 +1,5 @@
 ﻿using Checkmate.DAL.Repositories.Interfaces;
+using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Enums;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Utils;
@@ -47,6 +48,19 @@ namespace Checkmate.DAL.Repositories
 					entity.Id = (int)outputParameter.Value;
 				}
 				return entity;
+			}
+			catch (SqlException ex)
+			{
+				switch (ex.Number)
+				{
+					case 50004: // Minimum number of players cannot be greater than Maximum number of players
+					case 50005: // Minimum ELO cannot be greater than Maximum ELO
+					case 50006: // End inscription date must be in the future
+						throw new InvalidDataParamsException(ex.Message);
+					default:
+						Console.WriteLine(ex.Message);
+						throw new Exception("Error creating player", ex);
+				}
 			}
 			catch (Exception ex)
 			{
