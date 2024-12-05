@@ -2,7 +2,9 @@
 
 namespace Checkmate.BLL.Services.Interfaces
 {
-	public interface ITournamentService : IService<int, Tournament, TournamentLight>
+	public interface ITournamentService
 	{
+		public Tournament Create(Tournament entity);
+		public bool Delete(int entityKey);
 	}
 }

@@ -3,8 +3,9 @@ using Checkmate.Domain.Utils;
 
 namespace Checkmate.BLL.Services.Interfaces
 {
-	public interface IPlayerService : IService<int, Player, PlayerLight>
+	public interface IPlayerService
 	{
+		public Player Create(Player entity);
 		public IEnumerable<PlayerLight> GetAll(Pagination pagination, int? tournamentId = null);
 	}
 }

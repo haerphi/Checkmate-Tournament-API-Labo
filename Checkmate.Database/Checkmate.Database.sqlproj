@@ -60,6 +60,7 @@
     <Folder Include="Tables" />
     <Folder Include="StoredProcedures" />
     <Folder Include="Data" />
+    <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Db_Setup-script.sql" />
@@ -78,6 +79,7 @@
     <Build Include="StoredProcedures\GetPlayersProc.sql" />
     <Build Include="StoredProcedures\CreateTournament.sql" />
     <Build Include="StoredProcedures\CancelTournament.sql" />
+    <Build Include="Views\V_ActiveTournament.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Checkmate.Database.refactorlog" />

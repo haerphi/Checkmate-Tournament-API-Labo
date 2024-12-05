@@ -2,7 +2,6 @@
 using Checkmate.DAL.Repositories.Interfaces;
 using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Models;
-using Checkmate.Domain.Utils;
 
 namespace Checkmate.BLL.Services
 {
@@ -40,21 +39,6 @@ namespace Checkmate.BLL.Services
 		{
 			m_TournamentRepository.Delete(entityKey);
 			return true;
-		}
-
-		public IEnumerable<TournamentLight> GetAll(Pagination pagination)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Tournament GetById(int key)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Tournament Update(Tournament entity)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

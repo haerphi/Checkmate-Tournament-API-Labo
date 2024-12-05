@@ -1,4 +1,5 @@
 ﻿using Checkmate.DAL.Interfaces;
+using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Utils;
 using Microsoft.Data.SqlClient;
@@ -47,6 +48,21 @@ namespace Checkmate.DAL.Repositories
 				}
 
 				return entity;
+			}
+			catch (SqlException ex)
+			{
+				switch (ex.ErrorCode)
+				{
+					case 50001:
+						throw new NicknameAlreadyUsedException();
+					case 50002:
+						throw new EmailAlreadyUsedException();
+					case 50003:
+						throw new EloRangeException(ex.Message);
+					default:
+						Console.WriteLine(ex.Message);
+						throw new Exception("Error creating player", ex);
+				}
 			}
 			catch (Exception ex)
 			{

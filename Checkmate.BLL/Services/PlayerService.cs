@@ -30,29 +30,9 @@ namespace Checkmate.BLL.Services
 			return creadtedPlayer;
 		}
 
-		public bool Delete(int entityKey)
-		{
-			throw new NotImplementedException();
-		}
-
 		public IEnumerable<PlayerLight> GetAll(Pagination pagination, int? tournamentId = null)
 		{
 			return m_PlayerRepository.GetAll(pagination, tournamentId);
-		}
-
-		public IEnumerable<PlayerLight> GetAll(Pagination pagination)
-		{
-			return this.GetAll(pagination, null);
-		}
-
-		public Player GetById(int key)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Player Update(Player entity)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }
