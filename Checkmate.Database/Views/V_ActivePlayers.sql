@@ -1,4 +1,4 @@
-﻿CREATE VIEW [Person].[V_ActiveUsers]
+﻿CREATE VIEW [Person].[V_ActivePlayers]
 	AS SELECT 
         [Id],
         [Nickname], 

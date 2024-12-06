@@ -77,55 +77,9 @@ namespace Checkmate.DAL.Repositories
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<PlayerLight> GetAll(Pagination pagination, int? tournamentId = null)
-		{
-			try
-			{
-				using (SqlCommand command = new SqlCommand("[Person].[GetPlayersProc]", m_Connection))
-				{
-					// Parameters
-					command.CommandType = CommandType.StoredProcedure;
-
-					command.Parameters.AddWithValue("@offset", pagination.Offset); // Use @offset
-					command.Parameters.AddWithValue("@limit", pagination.Limit); // Use @limit
-					command.Parameters.AddWithValue("@tournamentId", tournamentId ?? (object)DBNull.Value); // Handle NULL values
-
-					List<PlayerLight> players = new List<PlayerLight>();
-
-					// Execute
-					m_Connection.Open();
-					using (SqlDataReader reader = command.ExecuteReader())
-					{
-						while (reader.Read())
-						{
-							players.Add(new PlayerLight
-							{
-								Id = (int)reader["Id"],
-								Nickname = (string)reader["Nickname"],
-								ELO = (int)reader["ELO"],
-								Email = (string)reader["Email"]
-							});
-						}
-					}
-					return players;
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
-				m_Connection.Close();
-				throw new Exception("Error getting players", ex);
-			}
-		}
-
-		public IEnumerable<PlayerLight> GetAll(Pagination pagination)
-		{
-			return this.GetAll(pagination, null);
-		}
-
 		public Player? GetById(int id)
 		{
-			string query = "SELECT * FROM [Person].[V_ActiveUsers] WHERE Id = @id";
+			string query = "SELECT * FROM [Person].[V_ActivePlayers] WHERE Id = @id";
 
 			try
 			{
@@ -225,7 +179,7 @@ namespace Checkmate.DAL.Repositories
 
 		public Player? GetByEmail(string email)
 		{
-			string query = "SELECT * FROM [Person].[V_ActiveUsers] WHERE Email = LOWER(@email)";
+			string query = "SELECT * FROM [Person].[V_ActivePlayers] WHERE Email = LOWER(@email)";
 
 			try
 			{
@@ -339,5 +293,9 @@ namespace Checkmate.DAL.Repositories
 			};
 		}
 
+		public IEnumerable<PlayerLight> GetAll(Pagination pagination)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
