@@ -101,5 +101,26 @@ namespace Checkmate.API.Controllers
 				return Problem(e.Message);
 			}
 		}
+
+		[HttpGet("{id}", Name = "GetTournamentById")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public ActionResult<TournamentDTO> GetById(int id)
+		{
+			try
+			{
+				Tournament tournament = m_TournamentService.GetById(id);
+				return Ok(tournament.ToTournamentDTO());
+			}
+			catch (TournamentNotFoundException e)
+			{
+				return NotFound();
+			}
+			catch (Exception e)
+			{
+				return Problem(e.Message);
+			}
+		}
 	}
 }

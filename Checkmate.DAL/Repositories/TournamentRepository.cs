@@ -199,9 +199,40 @@ namespace Checkmate.DAL.Repositories
 			}
 		}
 
-		public Tournament GetById(int id)
+		public Tournament? GetById(int id)
 		{
-			throw new NotImplementedException();
+			// TODO add registered players
+			// TODO add rounds
+			string query = @$"
+			SELECT Id, Name, Address, MinPlayer, MaxPlayer, Categories, MinElo, MaxElo, Status, EndInscriptionAt, CurrentRound, CreatedAt, UpdatedAt
+				FROM [Game].[V_ActiveTournaments] AS t
+				WHERE Id = @id
+				ORDER BY CreatedAt DESC";
+
+			try
+			{
+				using (SqlCommand command = new SqlCommand(query, m_Connection))
+				{
+					m_Connection.Open();
+					command.Parameters.AddWithValue("@id", id);
+
+					Tournament? tournament = null;
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						if (reader.Read())
+						{
+							tournament = ReaderToTournament(reader);
+						}
+					}
+
+					return tournament;
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw ex;
+			}
 		}
 
 		public Tournament Update(Tournament Entity)

@@ -9,5 +9,7 @@ namespace Checkmate.BLL.Services.Interfaces
 		public bool Delete(int entityKey);
 
 		public IEnumerable<Tournament> GetAllActive(TournamentPagination pagination);
+
+		public Tournament GetById(int id);
 	}
 }

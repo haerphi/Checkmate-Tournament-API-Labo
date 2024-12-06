@@ -46,5 +46,17 @@ namespace Checkmate.BLL.Services
 		{
 			return m_TournamentRepository.GetAllActive(pagination);
 		}
+
+		public Tournament GetById(int id)
+		{
+			Tournament? tournament = m_TournamentRepository.GetById(id);
+
+			if (tournament == null)
+			{
+				throw new TournamentNotFoundException();
+			}
+
+			return tournament;
+		}
 	}
 }

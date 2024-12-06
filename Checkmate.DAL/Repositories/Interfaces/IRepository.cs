@@ -7,7 +7,7 @@ namespace Checkmate.DAL.Interfaces
 		public Complete Create(Complete Entity);
 
 		public IEnumerable<Light> GetAll(Pagination pagination);
-		public Complete GetById(Key id);
+		public Complete? GetById(Key id);
 
 		public Complete Update(Complete entity);
 
