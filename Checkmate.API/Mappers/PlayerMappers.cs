@@ -30,15 +30,5 @@ namespace Checkmate.API.Mappers
 				Role = Enum.GetName(player.Role)!
 			};
 		}
-
-		public static PlayerLightDTO ToPlayerDTOLight(this PlayerLight player)
-		{
-			return new PlayerLightDTO()
-			{
-				Id = player.Id,
-				Nickname = player.Nickname,
-				ELO = player.ELO
-			};
-		}
 	}
 }

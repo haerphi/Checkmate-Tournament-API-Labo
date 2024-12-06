@@ -210,7 +210,7 @@ namespace Checkmate.DAL.Repositories
 
 		public Player? GetByNickname(string nickname)
 		{
-			string query = "SELECT * FROM [Person].[V_ActiveUsers] WHERE Nickname = LOWER(@nickname)";
+			string query = "SELECT * FROM [Person].[V_ActivePlayers] WHERE Nickname = LOWER(@nickname)";
 
 			try
 			{
@@ -295,7 +295,57 @@ namespace Checkmate.DAL.Repositories
 
 		public IEnumerable<PlayerLight> GetAll(Pagination pagination)
 		{
-			throw new NotImplementedException();
+			return GetAll(pagination, null);
+		}
+
+		public IEnumerable<PlayerLight> GetAll(Pagination pagination, int? tournamentId)
+		{
+			string query = "";
+			if (tournamentId is null)
+			{
+				query = "SELECT * FROM [Person].[V_ActivePlayers] ORDER BY Id OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY";
+			}
+			else
+			{
+				query = "[Person].[GetPlayersForTournament]";
+			}
+
+			try
+			{
+				List<PlayerLight> players = new List<PlayerLight>();
+				using (SqlCommand command = new SqlCommand(query, m_Connection))
+				{
+					if (tournamentId is not null)
+					{
+						command.CommandType = CommandType.StoredProcedure;
+						command.Parameters.AddWithValue("@tournamentId", tournamentId);
+					}
+
+					command.Parameters.AddWithValue("@offset", pagination.Offset);
+					command.Parameters.AddWithValue("@limit", pagination.Limit);
+					m_Connection.Open();
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							players.Add(new PlayerLight()
+							{
+								Id = (int)reader["Id"],
+								Nickname = (string)reader["Nickname"],
+								Email = (string)reader["Email"],
+								ELO = (int)reader["ELO"]
+							});
+						}
+					}
+					m_Connection.Close();
+				}
+				return players;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+				throw new Exception("Error getting all players", e);
+			}
 		}
 	}
 }

@@ -74,6 +74,7 @@
     <Build Include="StoredProcedures\RegisterToTournament.sql" />
     <Build Include="Tables\MM_Player_Tournament.sql" />
     <Build Include="Views\V_ActiveAgeCategories.sql" />
+    <Build Include="StoredProcedures\GetPlayersForTournament.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="profiles\Checkmate.Database.publish.xml" />
@@ -84,7 +85,6 @@
     <Build Include="Tables\Category.sql" />
     <Build Include="Tables\Tournament.sql" />
     <Build Include="Tables\MM_Tournament_Category.sql" />
-    <Build Include="StoredProcedures\GetPlayersProc.sql" />
     <Build Include="StoredProcedures\CreateTournament.sql" />
     <Build Include="StoredProcedures\CancelTournament.sql" />
     <Build Include="Views\V_ActiveTournaments.sql" />

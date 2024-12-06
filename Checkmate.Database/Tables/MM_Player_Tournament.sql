@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[MM_Player_Tournament]
+﻿CREATE TABLE [Game].[MM_Player_Tournament]
 (
 	[PlayerId] INT NOT NULL,
 	[TournamentId] INT NOT NULL,

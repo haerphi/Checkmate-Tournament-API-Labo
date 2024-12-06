@@ -1,4 +1,5 @@
 ﻿using Checkmate.Domain.Models;
+using Checkmate.Domain.Models.Paginations;
 
 namespace Checkmate.DAL.Interfaces
 {
@@ -9,5 +10,6 @@ namespace Checkmate.DAL.Interfaces
 		public Player? GetByEmail(string email);
 		public Player? GetByNickname(string nickname);
 		public void ChangePassword(int playerId, string password);
+		public IEnumerable<PlayerLight> GetAll(Pagination pagination, int? tournamentId = null);
 	}
 }

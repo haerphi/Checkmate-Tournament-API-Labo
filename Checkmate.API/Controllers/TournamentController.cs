@@ -45,9 +45,8 @@ namespace Checkmate.API.Controllers
 				if (sendInvitations)
 				{
 					Pagination pagination = new Pagination(0, 9999999);
-					IEnumerable<PlayerLight> playersWithElo = m_PlayerService.GetAll(pagination, createdTournament.Id);
-					Console.WriteLine($"Number of player with the elo: {playersWithElo.Count()}");
-					MailReceiver[] receivers = playersWithElo.Select(p => new MailReceiver(p.Nickname, p.Email)).ToArray();
+					IEnumerable<PlayerLight> availablePlayers = m_PlayerService.GetAll(pagination, createdTournament.Id);
+					MailReceiver[] receivers = availablePlayers.Select(p => new MailReceiver(p.Nickname, p.Email)).ToArray();
 
 					// TODO refacto for a better massive mailing
 					m_MailHelperService.BulkSendMailSameData<object>(receivers, MailTemplate.SendNewTournament, null);

@@ -2,13 +2,6 @@
 
 namespace Checkmate.API.DTO.Player
 {
-	public class PlayerLightDTO
-	{
-		public required int Id { get; set; }
-		public required string Nickname { get; set; }
-		public required int ELO { get; set; }
-	}
-
 	public class PlayerDTO
 	{
 		public int Id { get; set; }

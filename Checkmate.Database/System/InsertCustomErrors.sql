@@ -60,3 +60,23 @@ EXEC sp_addmessage
     @msgtext = 'Age Category doesn''t exist', -- Error message
     @lang = 'us_english'; -- Language
 GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50010, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Tournament not found', -- Error message
+    @lang = 'us_english'; -- Language
+GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50011, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Tournament is full', -- Error message
+    @lang = 'us_english'; -- Language
+GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50012, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Tournament inscription is closed', -- Error message
+    @lang = 'us_english'; -- Language
