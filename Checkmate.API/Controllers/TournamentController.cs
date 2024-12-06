@@ -26,6 +26,9 @@ namespace Checkmate.API.Controllers
 		}
 
 		[HttpPost(Name = "CreateTournament")]
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public ActionResult<TournamentDTO> Create([FromBody] TournamentCreateDTO tournamentDTO, [FromQuery] bool sendInvitations)
 		{
 			if (!ModelState.IsValid)
@@ -48,8 +51,9 @@ namespace Checkmate.API.Controllers
 					m_MailHelperService.BulkSendMailSameData<object>(receivers, MailTemplate.SendNewTournament, null);
 				}
 
-				return createdTournament.ToTournamentDTO();
+				return CreatedAtRoute(new { id = createdTournament.Id }, createdTournament.ToTournamentDTO());
 			}
+
 			catch (InvalidDataParamsException e)
 			{
 				return BadRequest(new { error = e.Message });
@@ -65,6 +69,8 @@ namespace Checkmate.API.Controllers
 		}
 
 		[HttpDelete("{id}", Name = "DeleteTournament")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public ActionResult Delete(int id)
 		{
 			try
@@ -82,11 +88,13 @@ namespace Checkmate.API.Controllers
 		}
 
 		[HttpGet("GetAllActive", Name = "GetAllActiveTournaments")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public ActionResult<IEnumerable<TournamentDTO>> GetAllActive([FromQuery] TournamentPagination? pagination)
 		{
 			try
 			{
-				return m_TournamentService.GetAllActive(pagination).Select(t => t.ToTournamentDTO()).ToList();
+				return Ok(m_TournamentService.GetAllActive(pagination).Select(t => t.ToTournamentDTO()).ToList());
 			}
 			catch (Exception e)
 			{

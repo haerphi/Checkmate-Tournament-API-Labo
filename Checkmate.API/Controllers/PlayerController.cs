@@ -24,6 +24,9 @@ namespace Checkmate.API.Controllers
 		}
 
 		[HttpPost(Name = "CreatePlayer")]
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public ActionResult<PlayerDTO> Create([FromBody] PlayerCreateDTO playerDTO)
 		{
 			if (!ModelState.IsValid)
@@ -50,6 +53,8 @@ namespace Checkmate.API.Controllers
 		}
 
 		[HttpGet(Name = "GetAllPlayers")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public ActionResult<IEnumerable<PlayerLightDTO>> GetAll([FromQuery] Pagination pagination, [FromQuery] int? tournamentId = null)
 		{
 			try
@@ -64,6 +69,7 @@ namespace Checkmate.API.Controllers
 		}
 
 		[HttpGet("{id}", Name = "GetById")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
 		public ActionResult<PlayerDTO> GetById(int id)
 		{
 			return Ok(id);
