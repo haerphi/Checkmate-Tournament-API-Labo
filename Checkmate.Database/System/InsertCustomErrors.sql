@@ -1,5 +1,4 @@
-﻿-- AddPlayer errors
-EXEC sp_addmessage 
+﻿EXEC sp_addmessage 
     @msgnum = 50001, -- Unique error number (must be >50000 for user-defined messages)
     @severity = 16,  -- user-defined errors
     @msgtext = 'Nickname already used', -- Error message
@@ -20,7 +19,6 @@ EXEC sp_addmessage
     @lang = 'us_english'; -- Language
 GO;
 
--- CreateTournament errors
 EXEC sp_addmessage 
     @msgnum = 50004, -- Unique error number (must be >50000 for user-defined messages)
     @severity = 16,  -- user-defined errors
@@ -42,9 +40,23 @@ EXEC sp_addmessage
     @lang = 'us_english'; -- Language
 GO;
 
--- ChangePlayerPassword errors
 EXEC sp_addmessage 
     @msgnum = 50007, -- Unique error number (must be >50000 for user-defined messages)
     @severity = 16,  -- user-defined errors
     @msgtext = 'Player does not exist', -- Error message
     @lang = 'us_english'; -- Language
+GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50008, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Player''s Elo is not in the range of the tournament''s Elo requirements.', -- Error message
+    @lang = 'us_english'; -- Language
+GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50009, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Age Category doesn''t exist', -- Error message
+    @lang = 'us_english'; -- Language
+GO;

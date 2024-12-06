@@ -33,7 +33,7 @@ namespace Checkmate.DAL.Repositories
 					command.Parameters.AddWithValue("@maxElo", entity.MaxElo);
 					command.Parameters.AddWithValue("@isWomenOnly", entity.IsWomenOnly);
 					command.Parameters.AddWithValue("@endInscriptionAt", entity.EndInscriptionAt);
-					command.Parameters.AddWithValue("@categories", entity.Categories);
+					command.Parameters.AddWithValue("@ageCategories", entity.Categories);
 
 					// Output parameter (new id)
 					SqlParameter outputParameter = new SqlParameter("@newTournamentId", SqlDbType.Int)
@@ -56,6 +56,7 @@ namespace Checkmate.DAL.Repositories
 					case 50004: // Minimum number of players cannot be greater than Maximum number of players
 					case 50005: // Minimum ELO cannot be greater than Maximum ELO
 					case 50006: // End inscription date must be in the future
+					case 50009: // Categories must exist
 						throw new InvalidDataParamsException(ex.Message);
 					default:
 						Console.WriteLine(ex.Message);

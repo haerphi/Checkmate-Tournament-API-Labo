@@ -7,7 +7,7 @@
 	@maxElo INT,
 	@isWomenOnly BIT = 0,
 	@endInscriptionAt DATETIME2,
-	@categories NVARCHAR(MAX),
+	@ageCategories NVARCHAR(MAX),
 	@newTournamentId INT OUTPUT
 ) AS
 BEGIN
@@ -22,7 +22,7 @@ BEGIN
 
 		-- Check if all categories exist else create it (a category is just an auto Id (INT IDENTITY) and a Name (NVARHCAR(50))
 		DECLARE CRS_Categories CURSOR FOR
-			SELECT value FROM STRING_SPLIT(@Categories, ',');
+			SELECT value FROM STRING_SPLIT(@ageCategories, ',');
 		OPEN CRS_Categories;
 
 		DECLARE @categoryName NVARCHAR(50);
@@ -31,18 +31,17 @@ BEGIN
 		WHILE @@FETCH_STATUS = 0 AND @error = 0
 		BEGIN
 			SELECT @categoryId = [Id] 
-				FROM [Game].[Category] 
+				FROM [Game].[AgeCategory] 
 				WHERE LOWER([Name]) = LOWER(@categoryName);
 
 			IF @categoryId IS NULL
-			BEGIN
-				INSERT INTO [Game].[Category] ([Name])
-					VALUES (LOWER(@categoryName));
-
-				SET @categoryId = @@IDENTITY;
-			END
-
-			INSERT INTO @categoryIds VALUES (@categoryId);
+				BEGIN
+					RAISERROR (50009, 16, 1);
+				END
+			ELSE
+				BEGIN
+					INSERT INTO @categoryIds VALUES (@categoryId);
+				END
 
 			SET @error = @@ERROR;
 			SET @categoryId = NULL;
@@ -103,7 +102,7 @@ BEGIN
 		FETCH NEXT FROM CRS_CategoriesToInsert INTO @categoryIdToInsert;
 		WHILE @@FETCH_STATUS = 0 AND @error = 0
 		BEGIN
-			INSERT INTO [Game].[MM_Tournament_Category] ([TournamentId], [CategoryId])
+			INSERT INTO [Game].[MM_Tournament_AgeCategory] ([TournamentId], [AgeCategoryId])
 			VALUES (@newTournamentId, @categoryIdToInsert);
 
 			SET @error = @@ERROR;

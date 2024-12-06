@@ -6,8 +6,8 @@
 			t.[MinPlayer] AS MinPlayer,
 			t.[MaxPlayer] AS MaxPlayer,
 			(SELECT STRING_AGG(c.Name,',')
-				 FROM [Game].[MM_Tournament_Category] AS tc
-				 JOIN [Game].[Category] AS c ON tc.CategoryId = c.Id
+				 FROM [Game].[MM_Tournament_AgeCategory] AS tc
+				 JOIN [Game].[AgeCategory] AS c ON tc.AgeCategoryId = c.Id
 				 WHERE tc.[TournamentId] = t.[Id]) AS Categories,
 			t.[MinElo] AS MinElo,
 			t.[MaxElo] AS MaxElo,

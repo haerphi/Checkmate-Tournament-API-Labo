@@ -71,6 +71,9 @@
     <Build Include="StoredProcedures\IsEmailAlreadyUsed.sql" />
     <Build Include="Views\V_ActivePlayers.sql" />
     <Build Include="StoredProcedures\ChangePlayerPassword.sql" />
+    <Build Include="StoredProcedures\RegisterToTournament.sql" />
+    <Build Include="Tables\MM_Player_Tournament.sql" />
+    <Build Include="Views\V_ActiveAgeCategories.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="profiles\Checkmate.Database.publish.xml" />
