@@ -4,9 +4,9 @@ using Checkmate.Domain.Models.Paginations;
 
 namespace Checkmate.DAL.Repositories.Interfaces
 {
-	public interface ITournamentRepository : IRepository<int, Tournament, TournamentLight>
+	public interface ITournamentRepository : IRepository<int, Tournament, Tournament>
 	{
-		public IEnumerable<TournamentLight> GetAll(TournamentPagination pagination);
-		public IEnumerable<TournamentLight> GetAllActive(TournamentPagination pagination);
+		public IEnumerable<Tournament> GetAll(TournamentPagination pagination);
+		public IEnumerable<Tournament> GetAllActive(TournamentPagination pagination);
 	}
 }

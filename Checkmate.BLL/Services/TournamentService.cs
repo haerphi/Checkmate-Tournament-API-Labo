@@ -42,7 +42,7 @@ namespace Checkmate.BLL.Services
 			return true;
 		}
 
-		public IEnumerable<TournamentLight> GetAllActive(TournamentPagination pagination)
+		public IEnumerable<Tournament> GetAllActive(TournamentPagination pagination)
 		{
 			return m_TournamentRepository.GetAllActive(pagination);
 		}

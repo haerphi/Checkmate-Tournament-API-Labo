@@ -33,7 +33,7 @@ namespace Checkmate.DAL.Repositories
 					command.Parameters.AddWithValue("@maxElo", entity.MaxElo);
 					command.Parameters.AddWithValue("@isWomenOnly", entity.IsWomenOnly);
 					command.Parameters.AddWithValue("@endInscriptionAt", entity.EndInscriptionAt);
-					command.Parameters.AddWithValue("@categories", string.Join(",", entity.Categories.Select(c => c.Name)));
+					command.Parameters.AddWithValue("@categories", entity.Categories);
 
 					// Output parameter (new id)
 					SqlParameter outputParameter = new SqlParameter("@newTournamentId", SqlDbType.Int)
@@ -94,17 +94,17 @@ namespace Checkmate.DAL.Repositories
 
 
 
-		public IEnumerable<TournamentLight> GetAll(TournamentPagination pagination)
+		public IEnumerable<Tournament> GetAll(TournamentPagination pagination)
 		{
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<TournamentLight> GetAll(Pagination pagination)
+		public IEnumerable<Tournament> GetAll(Pagination pagination)
 		{
 			return GetAll(new TournamentPagination(pagination.Offset, pagination.Limit));
 		}
 
-		public IEnumerable<TournamentLight> GetAllActive(TournamentPagination pagination)
+		public IEnumerable<Tournament> GetAllActive(TournamentPagination pagination)
 		{
 			List<string> conditions = [];
 			if (pagination.Name != null)
@@ -177,7 +177,7 @@ namespace Checkmate.DAL.Repositories
 						}
 					}
 
-					List<TournamentLight> tournaments = new List<TournamentLight>();
+					List<Tournament> tournaments = new List<Tournament>();
 
 					// Execute
 					m_Connection.Open();
@@ -185,23 +185,7 @@ namespace Checkmate.DAL.Repositories
 					{
 						while (reader.Read())
 						{
-							tournaments.Add(new TournamentLight
-							{
-								Id = (int)reader["Id"],
-								Name = (string)reader["Name"],
-								Address = (string)reader["Address"],
-								// TODO current nbr of registered players
-								MinPlayer = (int)reader["MinPlayer"],
-								MaxPlayer = (int)reader["MaxPlayer"],
-								Categories = (string)reader["Categories"],
-								MinElo = (int)reader["MinElo"],
-								MaxElo = (int)reader["MaxElo"],
-								Status = Enum.Parse<TournamentStatusEnum>((string)reader["Status"]),
-								EndInscriptionAt = (DateTime)reader["EndInscriptionAt"],
-								CurrentRound = (int)reader["CurrentRound"],
-								CreatedAt = (DateTime)reader["CreatedAt"],
-								UpdatedAt = (DateTime)reader["UpdatedAt"]
-							});
+							tournaments.Add(ReaderToTournament(reader));
 						}
 					}
 					m_Connection.Close();
@@ -223,6 +207,27 @@ namespace Checkmate.DAL.Repositories
 		public Tournament Update(Tournament Entity)
 		{
 			throw new NotImplementedException();
+		}
+
+		private Tournament ReaderToTournament(SqlDataReader reader)
+		{
+			return new Tournament
+			{
+				Id = (int)reader["Id"],
+				Name = (string)reader["Name"],
+				Address = (string)reader["Address"],
+				// TODO current nbr of registered players
+				MinPlayer = (int)reader["MinPlayer"],
+				MaxPlayer = (int)reader["MaxPlayer"],
+				Categories = (string)reader["Categories"],
+				MinElo = (int)reader["MinElo"],
+				MaxElo = (int)reader["MaxElo"],
+				Status = Enum.Parse<TournamentStatusEnum>((string)reader["Status"]),
+				EndInscriptionAt = (DateTime)reader["EndInscriptionAt"],
+				CurrentRound = (int)reader["CurrentRound"],
+				CreatedAt = (DateTime)reader["CreatedAt"],
+				UpdatedAt = (DateTime)reader["UpdatedAt"]
+			};
 		}
 	}
 }
