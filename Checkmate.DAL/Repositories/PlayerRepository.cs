@@ -199,7 +199,7 @@ namespace Checkmate.DAL.Repositories
 
 		public Player? GetByEmail(string email)
 		{
-			string query = "SELECT * FROM [Person].[V_ActiveUsers] WHERE LOWER(Email) = LOWER(@email)";
+			string query = "SELECT * FROM [Person].[V_ActiveUsers] WHERE Email = LOWER(@email)";
 
 			try
 			{
@@ -230,7 +230,7 @@ namespace Checkmate.DAL.Repositories
 
 		public Player? GetByNickname(string nickname)
 		{
-			string query = "SELECT * FROM [Person].[V_ActiveUsers] WHERE LOWER(Nickname) = LOWER(@nickname)";
+			string query = "SELECT * FROM [Person].[V_ActiveUsers] WHERE Nickname = LOWER(@nickname)";
 
 			try
 			{

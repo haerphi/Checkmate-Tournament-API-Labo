@@ -7,7 +7,7 @@ BEGIN
 		WHEN EXISTS (
 			SELECT 1
 				FROM [Person].[Player]
-				WHERE [Email] = @email
+				WHERE [Email] = LOWER(@email)
 		) THEN 1
 		ELSE 0	
 	END;

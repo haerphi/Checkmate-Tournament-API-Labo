@@ -38,7 +38,7 @@ BEGIN
     -- Insert the new player into the table
     SET NOCOUNT ON;
     INSERT INTO [Person].[Player] (Nickname, Email, Password, BirthDate, Gender, Elo, Role)
-    VALUES (@nickname, @email, @password, @birthdate, @gender, @elo, @role);
+    VALUES (LOWER(@nickname), LOWER(@email), @password, @birthdate, @gender, @elo, @role);
 
     -- Retrieve the ID of the newly inserted player
     SET @newPlayerId = SCOPE_IDENTITY();
