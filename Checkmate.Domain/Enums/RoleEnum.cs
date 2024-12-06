@@ -2,7 +2,7 @@
 {
 	public enum RoleEnum
 	{
-		Admin = 'a',
-		Player = 'p'
+		Admin,
+		Player
 	}
 }

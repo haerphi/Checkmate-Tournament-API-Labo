@@ -7,5 +7,6 @@ namespace Checkmate.BLL.Services.Interfaces
 	{
 		public Player Create(Player entity);
 		public IEnumerable<PlayerLight> GetAll(Pagination pagination, int? tournamentId = null);
+		public Player Login(string? email, string? nickname, string password);
 	}
 }

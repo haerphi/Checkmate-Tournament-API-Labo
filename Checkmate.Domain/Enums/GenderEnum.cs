@@ -2,9 +2,8 @@
 {
 	public enum GenderEnum
 	{
-		Male = 'm',
-		Female = 'f',
-		Other = 'x'
-	,
+		Male,
+		Female,
+		Other,
 	}
 }

@@ -48,5 +48,36 @@ namespace Checkmate.BLL.Services
 		{
 			return m_PlayerRepository.GetAll(pagination, tournamentId);
 		}
+
+		public Player Login(string? email, string? nickname, string password)
+		{
+			if (email == null && nickname == null)
+			{
+				throw new InvalidDataParamsException("Email or nickname must be provided.");
+			}
+
+			Player? player = null;
+
+			if (email != null)
+			{
+				player = m_PlayerRepository.GetByEmail(email);
+			}
+			else if (nickname != null)
+			{
+				player = m_PlayerRepository.GetByNickname(nickname);
+			}
+
+			if (player == null)
+			{
+				throw new PlayerNotFoundException();
+			}
+
+			if (!Argon2.Verify(player.Password, password))
+			{
+				throw new InvalidPasswordException();
+			}
+
+			return player;
+		}
 	}
 }

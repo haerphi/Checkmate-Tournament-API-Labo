@@ -4,7 +4,10 @@ using Checkmate.BLL.Services.Interfaces;
 using Checkmate.DAL.Interfaces;
 using Checkmate.DAL.Repositories;
 using Checkmate.DAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +28,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<SqlConnection>(c =>
 	new SqlConnection(builder.Configuration.GetConnectionString("Default")));
 
+// API injections
 builder.Services.AddTransient<MailHelperService>();
+builder.Services.AddScoped<AuthService>();
 
 // DAL injections
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
@@ -34,6 +39,28 @@ builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
 // BLL injections
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<ITournamentService, TournamentService>();
+
+// Authentication
+builder.Services.AddAuthentication(option =>
+{
+	option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+	option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(option =>
+{
+	option.TokenValidationParameters = new TokenValidationParameters
+	{
+		ValidateIssuerSigningKey = true,
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+
+		ValidateIssuer = true,
+		ValidIssuer = builder.Configuration["Jwt:Issuer"],
+
+		ValidateAudience = true,
+		ValidAudience = builder.Configuration["Jwt:Audience"],
+
+		ValidateLifetime = true
+	};
+});
 
 var app = builder.Build();
 
@@ -46,6 +73,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

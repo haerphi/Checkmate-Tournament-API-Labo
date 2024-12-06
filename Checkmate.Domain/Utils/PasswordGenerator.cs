@@ -4,7 +4,7 @@
 	{
 		public static string GeneratePassword()
 		{
-			return Guid.NewGuid().ToByteArray().Select(t => Convert.ToChar((t % 50) + 65)).ToString();
+			return string.Join("", Guid.NewGuid().ToByteArray().Select(t => Convert.ToChar((t % 50) + 65)));
 		}
 	}
 }

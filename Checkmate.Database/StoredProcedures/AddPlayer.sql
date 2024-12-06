@@ -4,9 +4,9 @@
     @email NVARCHAR(500),
     @password NVARCHAR(1000),
     @birthdate DATETIME2,
-    @gender CHAR(1),
+    @gender NVARCHAR(20),
     @elo INT = 1200,
-    @role CHAR(1) = 'p',
+    @role NVARCHAR(20) = 'p',
     @newPlayerId INT OUTPUT
 )
 AS

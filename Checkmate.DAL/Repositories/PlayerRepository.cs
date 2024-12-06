@@ -1,5 +1,6 @@
 ﻿using Checkmate.DAL.Interfaces;
 using Checkmate.Domain.CustomExceptions;
+using Checkmate.Domain.Enums;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Models.Paginations;
 using Microsoft.Data.SqlClient;
@@ -28,9 +29,9 @@ namespace Checkmate.DAL.Repositories
 					command.Parameters.AddWithValue("@email", entity.Email);
 					command.Parameters.AddWithValue("@password", entity.Password);
 					command.Parameters.AddWithValue("@birthDate", entity.BirthDate);
-					command.Parameters.AddWithValue("@gender", (char)entity.Gender);
+					command.Parameters.AddWithValue("@gender", Enum.GetName(entity.Gender));
 					command.Parameters.AddWithValue("@elo", entity.ELO);
-					command.Parameters.AddWithValue("@role", (char)entity.Role);
+					command.Parameters.AddWithValue("@role", Enum.GetName(entity.Role));
 
 					// Output parameter (new id)
 					SqlParameter outputParameter = new SqlParameter("@newPlayerId", SqlDbType.Int)
@@ -194,6 +195,89 @@ namespace Checkmate.DAL.Repositories
 		public Player Update(Player Entity)
 		{
 			throw new NotImplementedException();
+		}
+
+		public Player? GetByEmail(string email)
+		{
+			string query = "SELECT * FROM [Person].[V_ActiveUsers] WHERE LOWER(Email) = LOWER(@email)";
+
+			try
+			{
+				Player? player = null;
+
+				using (SqlCommand command = new SqlCommand(query, m_Connection))
+				{
+					command.Parameters.AddWithValue("@email", email);
+					m_Connection.Open();
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						if (reader.Read())
+						{
+							player = ReaderToActivePlayer(reader);
+						}
+					}
+					m_Connection.Close();
+				}
+
+				return player;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+				throw new Exception("Error getting player by email", e);
+			}
+		}
+
+		public Player? GetByNickname(string nickname)
+		{
+			string query = "SELECT * FROM [Person].[V_ActiveUsers] WHERE LOWER(Nickname) = LOWER(@nickname)";
+
+			try
+			{
+				Player? player = null;
+
+				using (SqlCommand command = new SqlCommand(query, m_Connection))
+				{
+					command.Parameters.AddWithValue("@nickname", nickname);
+					m_Connection.Open();
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						if (reader.Read())
+						{
+							if (reader.HasRows)
+							{
+								player = ReaderToActivePlayer(reader);
+							}
+						}
+					}
+					m_Connection.Close();
+				}
+
+				return player;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+				throw new Exception("Error getting player by nickname", e);
+			}
+		}
+
+		private Player ReaderToActivePlayer(SqlDataReader reader)
+		{
+			return new Player()
+			{
+				Id = (int)reader["Id"],
+				Nickname = (string)reader["Nickname"],
+				Email = (string)reader["Email"],
+				Password = (string)reader["Password"],
+				BirthDate = (DateTime)reader["BirthDate"],
+				Gender = Enum.Parse<GenderEnum>((string)reader["Gender"]),
+				ELO = (int)reader["ELO"],
+				Role = Enum.Parse<RoleEnum>((string)reader["Role"]),
+				CreatedAt = (DateTime)reader["CreatedAt"],
+				UpdatedAt = (DateTime)reader["UpdatedAt"],
+				DeletedAt = null
+			};
 		}
 	}
 }

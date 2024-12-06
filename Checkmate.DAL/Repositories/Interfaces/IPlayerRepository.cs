@@ -10,5 +10,7 @@ namespace Checkmate.DAL.Interfaces
 		public bool IsNicknameAlreadyUsed(string nickname);
 
 		public bool IsEmailAlreadyUsed(string email);
+		public Player? GetByEmail(string email);
+		public Player? GetByNickname(string nickname);
 	}
 }
