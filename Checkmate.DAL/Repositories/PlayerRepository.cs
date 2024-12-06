@@ -123,9 +123,35 @@ namespace Checkmate.DAL.Repositories
 			return this.GetAll(pagination, null);
 		}
 
-		public Player GetById(int id)
+		public Player? GetById(int id)
 		{
-			throw new NotImplementedException();
+			string query = "SELECT * FROM [Person].[V_ActiveUsers] WHERE Id = @id";
+
+			try
+			{
+				Player? player = null;
+
+				using (SqlCommand command = new SqlCommand(query, m_Connection))
+				{
+					command.Parameters.AddWithValue("@id", id);
+					m_Connection.Open();
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						if (reader.Read())
+						{
+							player = ReaderToActivePlayer(reader);
+						}
+					}
+					m_Connection.Close();
+				}
+
+				return player;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+				throw new Exception("Error getting player by email", e);
+			}
 		}
 
 		public bool IsEmailAlreadyUsed(string email)
@@ -262,6 +288,38 @@ namespace Checkmate.DAL.Repositories
 			}
 		}
 
+		public void ChangePassword(int playerId, string password)
+		{
+			try
+			{
+				using (SqlCommand command = new SqlCommand("[Person].[ChangePlayerPassword]", m_Connection))
+				{
+					command.CommandType = CommandType.StoredProcedure;
+					command.Parameters.AddWithValue("@playerId", playerId);
+					command.Parameters.AddWithValue("@newPassword", password);
+					m_Connection.Open();
+					command.ExecuteNonQuery();
+					m_Connection.Close();
+				}
+			}
+			catch (SqlException ex)
+			{
+				switch (ex.Number)
+				{
+					case 50007: // End inscription date must be in the future
+						throw new PlayerNotFoundException();
+					default:
+						Console.WriteLine(ex.Message);
+						throw new Exception("Error changing password", ex);
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+				throw new Exception("Error changing password", e);
+			}
+		}
+
 		private Player ReaderToActivePlayer(SqlDataReader reader)
 		{
 			return new Player()
@@ -280,5 +338,6 @@ namespace Checkmate.DAL.Repositories
 				DeletedAt = null
 			};
 		}
+
 	}
 }

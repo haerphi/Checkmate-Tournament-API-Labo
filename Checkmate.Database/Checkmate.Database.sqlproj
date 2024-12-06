@@ -70,6 +70,7 @@
     <Build Include="StoredProcedures\IsNicknameAlreadyUsed.sql" />
     <Build Include="StoredProcedures\IsEmailAlreadyUsed.sql" />
     <Build Include="Views\V_ActivePlayers.sql" />
+    <Build Include="StoredProcedures\ChangePlayerPassword.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="profiles\Checkmate.Database.publish.xml" />

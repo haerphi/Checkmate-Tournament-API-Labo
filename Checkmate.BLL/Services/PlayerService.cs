@@ -17,6 +17,19 @@ namespace Checkmate.BLL.Services
 			m_PlayerRepository = playerRepository;
 		}
 
+		public Player ChangePassword(int playerId, string password)
+		{
+			Player? player = m_PlayerRepository.GetById(playerId);
+
+			if (player is null)
+			{
+				throw new PlayerNotFoundException();
+			}
+
+			m_PlayerRepository.ChangePassword(playerId, Argon2.Hash(password));
+			return m_PlayerRepository.GetById(playerId)!;
+		}
+
 		public Player Create(Player entity)
 		{
 			entity.Id = null;

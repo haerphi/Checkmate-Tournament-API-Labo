@@ -41,3 +41,10 @@ EXEC sp_addmessage
     @msgtext = 'End inscription date must be in the future', -- Error message
     @lang = 'us_english'; -- Language
 GO;
+
+-- ChangePlayerPassword errors
+EXEC sp_addmessage 
+    @msgnum = 50007, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Player does not exist', -- Error message
+    @lang = 'us_english'; -- Language

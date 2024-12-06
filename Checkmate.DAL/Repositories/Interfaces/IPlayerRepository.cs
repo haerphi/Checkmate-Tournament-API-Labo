@@ -12,5 +12,6 @@ namespace Checkmate.DAL.Interfaces
 		public bool IsEmailAlreadyUsed(string email);
 		public Player? GetByEmail(string email);
 		public Player? GetByNickname(string nickname);
+		public void ChangePassword(int playerId, string password);
 	}
 }
