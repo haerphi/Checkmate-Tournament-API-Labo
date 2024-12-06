@@ -6,6 +6,7 @@ using Checkmate.BLL.Services.Interfaces;
 using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Models.Paginations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Checkmate.API.Controllers
@@ -27,6 +28,7 @@ namespace Checkmate.API.Controllers
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		[Authorize(Roles = "Admin,Player")]
 		public ActionResult<PlayerDTO> Create([FromBody] PlayerCreateDTO playerDTO)
 		{
 			if (!ModelState.IsValid)
@@ -55,6 +57,7 @@ namespace Checkmate.API.Controllers
 		[HttpGet(Name = "GetAllPlayers")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		[Authorize(Roles = "Admin")]
 		public ActionResult<IEnumerable<PlayerLightDTO>> GetAll([FromQuery] Pagination pagination, [FromQuery] int? tournamentId = null)
 		{
 			try

@@ -6,6 +6,7 @@ using Checkmate.BLL.Services.Interfaces;
 using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Models.Paginations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Checkmate.API.Controllers
@@ -29,6 +30,7 @@ namespace Checkmate.API.Controllers
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		[Authorize(Roles = "Admin")]
 		public ActionResult<TournamentDTO> Create([FromBody] TournamentCreateDTO tournamentDTO, [FromQuery] bool sendInvitations)
 		{
 			if (!ModelState.IsValid)
@@ -71,6 +73,7 @@ namespace Checkmate.API.Controllers
 		[HttpDelete("{id}", Name = "DeleteTournament")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		[Authorize(Roles = "Admin")]
 		public ActionResult Delete(int id)
 		{
 			try

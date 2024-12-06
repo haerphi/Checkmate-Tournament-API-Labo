@@ -26,7 +26,7 @@ namespace Checkmate.API.Services
 
 			if (player.PasswordChanged)
 			{
-				new Claim(ClaimTypes.Role, player.Role.ToString());
+				claims.Add(new Claim(ClaimTypes.Role, Enum.GetName(player.Role)));
 			}
 
 			// Crédentials pour signé le token (Clef + l'algo)

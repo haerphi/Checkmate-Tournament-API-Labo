@@ -270,6 +270,7 @@ namespace Checkmate.DAL.Repositories
 				Nickname = (string)reader["Nickname"],
 				Email = (string)reader["Email"],
 				Password = (string)reader["Password"],
+				PasswordChanged = (bool)reader["PasswordChanged"],
 				BirthDate = (DateTime)reader["BirthDate"],
 				Gender = Enum.Parse<GenderEnum>((string)reader["Gender"]),
 				ELO = (int)reader["ELO"],

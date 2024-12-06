@@ -20,7 +20,7 @@ namespace Checkmate.API.Controllers
 			m_PlayerService = playerService;
 		}
 
-		[HttpPost("login")]
+		[HttpPost("Login", Name = "Login")]
 		public IActionResult Login([FromBody] LoginDTO login)
 		{
 			if (!ModelState.IsValid)
