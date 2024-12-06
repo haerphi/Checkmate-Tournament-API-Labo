@@ -35,5 +35,26 @@ namespace Checkmate.API.Services.Mails
 
 			return email;
 		}
+
+		public struct SuccessfullyRegisterToTournamentData
+		{
+			public Player User { get; set; }
+			public Tournament Tournament { get; set; }
+		}
+
+		public static MimeMessage SendSuccessfullyRegisterToTournament(SuccessfullyRegisterToTournamentData data)
+		{
+			MimeMessage email = new MimeMessage();
+			email.Subject = "Inscription au tournois réussie! (●'◡'●)";
+			email.Body = new TextPart(TextFormat.Plain)
+			{
+				Text = $"Félicitation {data.User.Nickname} ! \n\n" +
+						$"Tu t'es bien inscrit au tournois {data.Tournament.Name} ! \n\n" +
+					   "(✿◡‿◡) \n\n\n" +
+					   "Cordalement Checkmate."
+			};
+
+			return email;
+		}
 	}
 }

@@ -62,6 +62,18 @@ namespace Checkmate.BLL.Services
 			return m_PlayerRepository.GetAll(pagination, tournamentId);
 		}
 
+		public Player GetById(int playerId)
+		{
+			Player? player = m_PlayerRepository.GetById(playerId);
+
+			if (player == null)
+			{
+				throw new PlayerNotFoundException();
+			}
+
+			return player;
+		}
+
 		public Player Login(string? email, string? nickname, string password)
 		{
 			if (email == null && nickname == null)

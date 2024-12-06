@@ -58,5 +58,10 @@ namespace Checkmate.BLL.Services
 
 			return tournament;
 		}
+
+		public bool RegisterPlayerToTournament(int playerId, int tournamentId)
+		{
+			return m_TournamentRepository.RegisterPlayerToTournament(playerId, tournamentId);
+		}
 	}
 }

@@ -4,10 +4,13 @@ using Checkmate.API.Services;
 using Checkmate.API.Services.Mails;
 using Checkmate.BLL.Services.Interfaces;
 using Checkmate.Domain.CustomExceptions;
+using Checkmate.Domain.Enums;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Models.Paginations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using static Checkmate.API.Services.Mails.MailTemplate;
 
 namespace Checkmate.API.Controllers
 {
@@ -123,6 +126,58 @@ namespace Checkmate.API.Controllers
 			{
 				return Problem(e.Message);
 			}
+		}
+
+		[HttpPost("RegisterPlayer", Name = "RegisterPlayerToTournament")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		[Authorize(Roles = "Admin,Player")]
+		public ActionResult RegisterPlayerToTournament([FromBody] RegisterPlayerToTournamentDTO rpttdto)
+		{
+			if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int reqPlayerId))
+			{
+				return Unauthorized();
+			}
+
+			if (rpttdto.PlayerId is not null)
+			{
+				if (!Enum.TryParse(User.FindFirst(ClaimTypes.Role)?.Value, out RoleEnum role) || role != RoleEnum.Admin)
+				{
+					return Unauthorized();
+				}
+			}
+
+			int playerIdToRegister = rpttdto.PlayerId ?? reqPlayerId;
+
+			try
+			{
+				m_TournamentService.RegisterPlayerToTournament(playerIdToRegister, rpttdto.TournamentId);
+			}
+			catch (InvalidDataParamsException e)
+			{
+				return BadRequest(new { error = e.Message });
+			}
+			catch (Exception e)
+			{
+				return Problem(e.Message);
+			}
+
+			if (rpttdto.notifyPlayer)
+			{
+				Player player = m_PlayerService.GetById(playerIdToRegister);
+
+				MailReceiver receiver = new MailReceiver(player.Nickname, player.Email);
+				SuccessfullyRegisterToTournamentData data = new SuccessfullyRegisterToTournamentData
+				{
+					User = player,
+					Tournament = m_TournamentService.GetById(rpttdto.TournamentId)
+				};
+
+				m_MailHelperService.SendMail(receiver, MailTemplate.SendSuccessfullyRegisterToTournament, data);
+			}
+
+			return Ok();
 		}
 	}
 }

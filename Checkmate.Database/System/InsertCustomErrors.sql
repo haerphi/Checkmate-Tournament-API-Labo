@@ -80,3 +80,32 @@ EXEC sp_addmessage
     @severity = 16,  -- user-defined errors
     @msgtext = 'Tournament inscription is closed', -- Error message
     @lang = 'us_english'; -- Language
+GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50013, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Player not found', -- Error message
+    @lang = 'us_english'; -- Language
+GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50014, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Player ELO out of range', -- Error message
+    @lang = 'us_english'; -- Language
+GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50015, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Player is not in the age range of the tournament''s age category requirements.', -- Error message
+    @lang = 'us_english'; -- Language
+GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50016, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Player is already registered to the tournament.', -- Error message
+    @lang = 'us_english'; -- Language
+GO;

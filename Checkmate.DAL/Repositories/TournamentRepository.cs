@@ -261,5 +261,45 @@ namespace Checkmate.DAL.Repositories
 				UpdatedAt = (DateTime)reader["UpdatedAt"]
 			};
 		}
+
+		public bool RegisterPlayerToTournament(int playerId, int tournamentId)
+		{
+			try
+			{
+				using (SqlCommand command = new SqlCommand("[Game].[RegisterToTournament]", m_Connection))
+				{
+					// Parameters
+					command.CommandType = CommandType.StoredProcedure;
+					command.Parameters.AddWithValue("@playerId", playerId);
+					command.Parameters.AddWithValue("@tournamentId", tournamentId);
+					// Execute
+					m_Connection.Open();
+					command.ExecuteNonQuery();
+					m_Connection.Close();
+				}
+				return true;
+			}
+			catch (SqlException ex)
+			{
+				switch (ex.Number)
+				{
+					case 50010: // Tournament not found
+					case 50011: // Tournament is full
+					case 50012: // Inscription date passed
+					case 50014: // Player ELO out of range
+					case 50015: // Player age out of range
+					case 50016: // Player already registered
+						throw new InvalidDataParamsException(ex.Message);
+					default:
+						Console.WriteLine(ex.Message);
+						throw new Exception("Error registering player to tournament", ex);
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw new Exception("Error registering player to tournament", ex);
+			}
+		}
 	}
 }

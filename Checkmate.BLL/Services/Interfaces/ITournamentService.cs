@@ -11,5 +11,6 @@ namespace Checkmate.BLL.Services.Interfaces
 		public IEnumerable<Tournament> GetAllActive(TournamentPagination pagination);
 
 		public Tournament GetById(int id);
+		public bool RegisterPlayerToTournament(int playerId, int tournamentId);
 	}
 }
