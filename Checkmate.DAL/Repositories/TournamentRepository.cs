@@ -142,7 +142,7 @@ namespace Checkmate.DAL.Repositories
 
 			string query = @$"
 			SELECT Id, Name, Address, MinPlayer, MaxPlayer, Categories, MinElo, MaxElo, Status, EndInscriptionAt, CurrentRound, CreatedAt, UpdatedAt
-				FROM [Game].[V_ActiveTournaments] AS t
+				FROM [Game].[V_Tournaments] AS t
 				{where}
 				ORDER BY CreatedAt DESC
 					OFFSET @offset ROWS
@@ -206,7 +206,7 @@ namespace Checkmate.DAL.Repositories
 			// TODO add rounds
 			string query = @$"
 			SELECT Id, Name, Address, MinPlayer, MaxPlayer, Categories, MinElo, MaxElo, Status, EndInscriptionAt, CurrentRound, CreatedAt, UpdatedAt
-				FROM [Game].[V_ActiveTournaments] AS t
+				FROM [Game].[V_Tournaments] AS t
 				WHERE Id = @id
 				ORDER BY CreatedAt DESC";
 

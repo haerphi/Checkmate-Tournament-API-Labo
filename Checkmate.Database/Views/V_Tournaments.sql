@@ -1,4 +1,4 @@
-﻿CREATE VIEW [Game].[V_ActiveTournaments]
+﻿CREATE VIEW [Game].[V_Tournaments]
 	AS SELECT t.[Id] AS Id, 
 			t.[Name] AS Name, 
 			t.[Address] AS Address, 
@@ -18,6 +18,4 @@
 			t.[CreatedAt] AS CreatedAt,
 			t.[UpdatedAt] AS UpdatedAt
 		FROM [Game].[Tournament] AS t
-		WHERE [Status] != 'finished' 
-			AND [Status] != 'canceled'
-			AND [DeletedAt] IS NULL;
+			WHERE [DeletedAt] IS NULL;

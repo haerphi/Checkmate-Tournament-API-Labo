@@ -88,7 +88,7 @@
     <Build Include="Tables\MM_Tournament_Category.sql" />
     <Build Include="StoredProcedures\CreateTournament.sql" />
     <Build Include="StoredProcedures\CancelTournament.sql" />
-    <Build Include="Views\V_ActiveTournaments.sql" />
+    <Build Include="Views\V_Tournaments.sql" />
     <None Include="System\Db_Setup-script.sql" />
   </ItemGroup>
   <ItemGroup>
