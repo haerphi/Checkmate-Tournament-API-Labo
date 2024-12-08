@@ -15,6 +15,7 @@ namespace Checkmate.DAL.Repositories
 		public TournamentRepository(SqlConnection connection)
 		{
 			m_Connection = connection;
+			m_Connection.Open();
 		}
 
 		public Tournament Create(Tournament entity)
@@ -42,9 +43,7 @@ namespace Checkmate.DAL.Repositories
 					};
 					command.Parameters.Add(outputParameter);
 					// Execute
-					m_Connection.Open();
 					command.ExecuteNonQuery();
-					m_Connection.Close();
 					entity.Id = (int)outputParameter.Value;
 				}
 				return entity;
@@ -81,9 +80,7 @@ namespace Checkmate.DAL.Repositories
 					command.Parameters.AddWithValue("@tournamentId", id);
 					command.Parameters.AddWithValue("@paranoid", paranoid);
 					// Execute
-					m_Connection.Open();
 					command.ExecuteNonQuery();
-					m_Connection.Close();
 				}
 			}
 			catch (Exception ex)
@@ -92,8 +89,6 @@ namespace Checkmate.DAL.Repositories
 				throw new Exception("Error deleting tournament", ex);
 			}
 		}
-
-
 
 		public IEnumerable<Tournament> GetAll(TournamentPagination pagination)
 		{
@@ -134,10 +129,10 @@ namespace Checkmate.DAL.Repositories
 				}
 			}
 
-			string where = "";
+			string where = "WHERE [Status] != 'finished' AND [Status] != 'canceled'";
 			if (conditions.Count > 0)
 			{
-				where = "WHERE " + string.Join(" AND ", conditions);
+				where += " " + string.Join(" AND ", conditions);
 			}
 
 			string query = @$"
@@ -181,7 +176,6 @@ namespace Checkmate.DAL.Repositories
 					List<Tournament> tournaments = new List<Tournament>();
 
 					// Execute
-					m_Connection.Open();
 					using (SqlDataReader reader = command.ExecuteReader())
 					{
 						while (reader.Read())
@@ -189,7 +183,6 @@ namespace Checkmate.DAL.Repositories
 							tournaments.Add(ReaderToTournament(reader));
 						}
 					}
-					m_Connection.Close();
 					return tournaments;
 				}
 			}
@@ -214,7 +207,6 @@ namespace Checkmate.DAL.Repositories
 			{
 				using (SqlCommand command = new SqlCommand(query, m_Connection))
 				{
-					m_Connection.Open();
 					command.Parameters.AddWithValue("@id", id);
 
 					Tournament? tournament = null;
@@ -273,9 +265,7 @@ namespace Checkmate.DAL.Repositories
 					command.Parameters.AddWithValue("@playerId", playerId);
 					command.Parameters.AddWithValue("@tournamentId", tournamentId);
 					// Execute
-					m_Connection.Open();
 					command.ExecuteNonQuery();
-					m_Connection.Close();
 				}
 				return true;
 			}
