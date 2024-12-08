@@ -17,8 +17,15 @@ namespace Checkmate.Domain.Models
 		public bool IsWomenOnly { get; set; } = false;
 		public DateTime CreatedAt { get; set; } = DateTime.Now;
 		public DateTime UpdatedAt { get; set; } = DateTime.Now;
-		public DateTime? DeletedAt { get; set; } = DateTime.Now;
+		public DateTime? DeletedAt { get; set; }
 		public DateTime EndInscriptionAt { get; set; } = DateTime.Now;
 		public required string Categories { get; set; }
+	}
+
+	public class EligibleTournament : Tournament
+	{
+		public bool CanRegister { get; set; }
+		public bool IsRegistered { get; set; }
+		public string Reason { get; set; } = "";
 	}
 }

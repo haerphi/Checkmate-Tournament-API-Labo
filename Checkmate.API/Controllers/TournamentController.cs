@@ -104,11 +104,18 @@ namespace Checkmate.API.Controllers
 		[HttpGet("GetAllActive", Name = "GetAllActiveTournaments")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public ActionResult<IEnumerable<TournamentDTO>> GetAllActive([FromQuery] TournamentPagination? pagination)
+		public ActionResult<IEnumerable<TournamentDTO>> GetAllActive([FromQuery] TournamentPagination? pagination, int? playerId = null)
 		{
 			try
 			{
-				return Ok(m_TournamentService.GetAllActive(pagination).Select(t => t.ToTournamentDTO()).ToList());
+				if (playerId is not null)
+				{
+					return Ok(m_TournamentService.GetAllActive(pagination, (int)playerId).Select(t => t.ToTournamentDTO()).ToList());
+				}
+				else
+				{
+					return Ok(m_TournamentService.GetAllActive(pagination).Select(t => t.ToTournamentDTO()).ToList());
+				}
 			}
 			catch (Exception e)
 			{

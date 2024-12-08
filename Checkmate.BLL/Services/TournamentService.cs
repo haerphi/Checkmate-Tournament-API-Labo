@@ -15,6 +15,11 @@ namespace Checkmate.BLL.Services
 			m_TournamentRepository = tournamentRepository;
 		}
 
+		public string CheckPlayerEligibility(int playerId, int tournamentId)
+		{
+			return m_TournamentRepository.CheckPlayerEligibility(playerId, tournamentId);
+		}
+
 		public Tournament Create(Tournament entity)
 		{
 			entity.Id = null;
@@ -48,6 +53,42 @@ namespace Checkmate.BLL.Services
 		public IEnumerable<Tournament> GetAllActive(TournamentPagination pagination)
 		{
 			return m_TournamentRepository.GetAllActive(pagination);
+		}
+
+		public IEnumerable<EligibleTournament> GetAllActive(TournamentPagination pagination, int playerId)
+		{
+			IEnumerable<Tournament> tournaments = m_TournamentRepository.GetAllActive(pagination);
+
+			List<EligibleTournament> eligibleTournaments = new List<EligibleTournament>();
+			foreach (Tournament t in tournaments)
+			{
+				string reason = CheckPlayerEligibility(playerId, (int)t.Id!);
+
+				eligibleTournaments.Add(new EligibleTournament
+				{
+					Id = t.Id,
+					Name = t.Name,
+					Address = t.Address,
+					NbrOfPlayers = t.NbrOfPlayers,
+					MinPlayer = t.MinPlayer,
+					MaxPlayer = t.MaxPlayer,
+					MinElo = t.MinElo,
+					MaxElo = t.MaxElo,
+					Status = t.Status,
+					CurrentRound = t.CurrentRound,
+					IsWomenOnly = t.IsWomenOnly,
+					CreatedAt = t.CreatedAt,
+					UpdatedAt = t.UpdatedAt,
+					DeletedAt = t.DeletedAt,
+					EndInscriptionAt = t.EndInscriptionAt,
+					Categories = t.Categories,
+					CanRegister = reason == "Eligible",
+					IsRegistered = reason == "Player already registered",
+					Reason = reason
+				});
+			}
+
+			return eligibleTournaments;
 		}
 
 		public Tournament GetById(int id)

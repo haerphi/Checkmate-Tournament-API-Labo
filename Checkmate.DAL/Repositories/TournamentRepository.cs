@@ -324,5 +324,33 @@ namespace Checkmate.DAL.Repositories
 				throw new Exception("Error getting players of tournament", ex);
 			}
 		}
+
+		public string CheckPlayerEligibility(int playerId, int tournamentId)
+		{
+			try
+			{
+				// Ensure the connection is open
+				if (m_Connection.State != ConnectionState.Open)
+				{
+					m_Connection.Open();
+				}
+
+				using (SqlCommand command = new SqlCommand("SELECT [Game].[CheckPlayerEligibility](@playerId, @tournamentId)", m_Connection))
+				{
+					// Add parameters
+					command.Parameters.AddWithValue("@playerId", playerId);
+					command.Parameters.AddWithValue("@tournamentId", tournamentId);
+
+					// Execute the function
+					object result = command.ExecuteScalar();
+					return result != null ? result.ToString() : null;
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"An error occurred: {ex.Message}");
+				throw; // Retain original stack trace
+			}
+		}
 	}
 }
