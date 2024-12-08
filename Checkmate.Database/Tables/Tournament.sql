@@ -2,7 +2,7 @@
 (
 	[Id] INT IDENTITY,
 	[Name] NVARCHAR(50) NOT NULL,
-	[Address] NVARCHAR(100) NOT NULL,
+	[Address] NVARCHAR(100) NULL,
 	[MinPlayer] INT NOT NULL,
 	[MaxPlayer] INT NOT NULL,
 	[MinElo] INT NOT NULL,

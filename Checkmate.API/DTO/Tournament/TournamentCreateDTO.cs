@@ -9,9 +9,8 @@ namespace Checkmate.API.DTO.Tournament
 		[MinLength(5), MaxLength(50)]
 		public string Name { get; set; }
 
-		[Required]
 		[MinLength(5), MaxLength(100)]
-		public required string Address { get; set; }
+		public string? Address { get; set; }
 
 		[Required]
 		[Range(GameRule.MinPlayers, GameRule.MaxPlayers)]
