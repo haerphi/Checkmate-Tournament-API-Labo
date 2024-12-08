@@ -38,6 +38,9 @@ namespace Checkmate.BLL.Services
 
 		public bool Delete(int entityKey)
 		{
+			// check if the tournament exists
+			Tournament tournament = GetById(entityKey);
+
 			m_TournamentRepository.Delete(entityKey);
 			return true;
 		}
@@ -57,6 +60,14 @@ namespace Checkmate.BLL.Services
 			}
 
 			return tournament;
+		}
+
+		public List<PlayerLight> GetPlayersOfTournament(int tournamentId)
+		{
+			// check if the tournament exists
+			Tournament t = GetById(tournamentId);
+
+			return m_TournamentRepository.GetPlayersOfTournament(tournamentId);
 		}
 
 		public bool RegisterPlayerToTournament(int playerId, int tournamentId)

@@ -9,5 +9,6 @@ namespace Checkmate.DAL.Repositories.Interfaces
 		public IEnumerable<Tournament> GetAll(TournamentPagination pagination);
 		public IEnumerable<Tournament> GetAllActive(TournamentPagination pagination);
 		public bool RegisterPlayerToTournament(int playerId, int tournamentId);
+		public List<PlayerLight> GetPlayersOfTournament(int tournamentId);
 	}
 }

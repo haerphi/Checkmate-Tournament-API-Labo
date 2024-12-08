@@ -286,5 +286,43 @@ namespace Checkmate.DAL.Repositories
 				throw new Exception("Error registering player to tournament", ex);
 			}
 		}
+
+		public List<PlayerLight> GetPlayersOfTournament(int tournamentId)
+		{
+			List<PlayerLight> players = [];
+
+			string query = @$"SELECT [Id], [Nickname], [Email], [ELO]
+	FROM [Person].[V_ActivePlayers] p
+	LEFT JOIN [Game].[MM_Player_Tournament] pt ON p.Id = pt.PlayerId
+	WHERE pt.TournamentId = @tournamentId";
+
+			try
+			{
+				using (SqlCommand command = new SqlCommand(query, m_Connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@tournamentId", tournamentId);
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							players.Add(new PlayerLight
+							{
+								Id = (int)reader["Id"],
+								Nickname = (string)reader["Nickname"],
+								Email = (string)reader["Email"],
+								ELO = (int)reader["ELO"]
+							});
+						}
+					}
+				}
+				return players;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw new Exception("Error getting players of tournament", ex);
+			}
+		}
 	}
 }
