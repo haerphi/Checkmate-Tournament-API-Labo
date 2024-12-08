@@ -2,7 +2,7 @@
 	AS SELECT t.[Id] AS Id, 
 			t.[Name] AS Name, 
 			t.[Address] AS Address, 
-			-- TODO current nbr of registered players
+			(SELECT COUNT (pt.[PlayerId]) FROM [Game].[MM_Player_Tournament] pt WHERE pt.TournamentId = t.[Id]) AS NbrOfPlayers,
 			t.[MinPlayer] AS MinPlayer,
 			t.[MaxPlayer] AS MaxPlayer,
 			(SELECT STRING_AGG(c.Name,',')

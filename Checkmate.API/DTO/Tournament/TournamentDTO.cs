@@ -1,4 +1,5 @@
 ﻿using Checkmate.Domain.Enums;
+using Checkmate.Domain.Models;
 
 namespace Checkmate.API.DTO.Tournament
 {
@@ -7,7 +8,7 @@ namespace Checkmate.API.DTO.Tournament
 		public required int? Id { get; set; }
 		public required string Name { get; set; }
 		public string? Address { get; set; }
-		// TODO current nbr of registered players
+		public required int NbrOfPlayers { get; set; }
 		public required int MinPlayer { get; set; }
 		public required int MaxPlayer { get; set; }
 		public required string[] Categories { get; set; }
@@ -20,5 +21,6 @@ namespace Checkmate.API.DTO.Tournament
 		public required DateTime CreatedAt { get; set; }
 		public required DateTime UpdatedAt { get; set; }
 		public required DateTime? DeletedAt { get; set; }
+		public IEnumerable<PlayerLight> Players { get; set; } = [];
 	}
 }

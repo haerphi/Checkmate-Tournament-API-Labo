@@ -28,7 +28,7 @@ namespace Checkmate.API.Mappers
 				Id = tournament.Id,
 				Name = tournament.Name,
 				Address = tournament.Address,
-				// TODO current nbr of registered players
+				NbrOfPlayers = tournament.NbrOfPlayers,
 				MinPlayer = tournament.MinPlayer,
 				MaxPlayer = tournament.MaxPlayer,
 				MinElo = tournament.MinElo,

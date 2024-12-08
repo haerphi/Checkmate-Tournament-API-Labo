@@ -7,7 +7,7 @@ namespace Checkmate.Domain.Models
 		public int? Id { get; set; } = null;
 		public required string Name { get; set; }
 		public string? Address { get; set; }
-		// TODO current nbr of registered players
+		public int NbrOfPlayers { get; set; } = 0;
 		public required int MinPlayer { get; set; }
 		public required int MaxPlayer { get; set; }
 		public required int MinElo { get; set; }

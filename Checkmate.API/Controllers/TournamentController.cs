@@ -125,7 +125,10 @@ namespace Checkmate.API.Controllers
 			try
 			{
 				Tournament tournament = m_TournamentService.GetById(id);
-				return Ok(tournament.ToTournamentDTO());
+				TournamentDTO tournamentDTO = tournament.ToTournamentDTO();
+				tournamentDTO.Players = m_TournamentService.GetPlayersOfTournament(id);
+
+				return Ok(tournamentDTO);
 			}
 			catch (TournamentNotFoundException e)
 			{

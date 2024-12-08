@@ -136,7 +136,7 @@ namespace Checkmate.DAL.Repositories
 			}
 
 			string query = @$"
-			SELECT Id, Name, Address, MinPlayer, MaxPlayer, Categories, MinElo, MaxElo, Status, EndInscriptionAt, CurrentRound, CreatedAt, UpdatedAt
+			SELECT Id, Name, Address, NbrOfPlayers, MinPlayer, MaxPlayer, Categories, MinElo, MaxElo, Status, EndInscriptionAt, CurrentRound, CreatedAt, UpdatedAt
 				FROM [Game].[V_Tournaments] AS t
 				{where}
 				ORDER BY CreatedAt DESC
@@ -198,7 +198,7 @@ namespace Checkmate.DAL.Repositories
 			// TODO add registered players
 			// TODO add rounds
 			string query = @$"
-			SELECT Id, Name, Address, MinPlayer, MaxPlayer, Categories, MinElo, MaxElo, Status, EndInscriptionAt, CurrentRound, CreatedAt, UpdatedAt
+			SELECT Id, Name, Address, NbrOfPlayers, MinPlayer, MaxPlayer, Categories, MinElo, MaxElo, Status, EndInscriptionAt, CurrentRound, CreatedAt, UpdatedAt
 				FROM [Game].[V_Tournaments] AS t
 				WHERE Id = @id
 				ORDER BY CreatedAt DESC";
@@ -240,7 +240,7 @@ namespace Checkmate.DAL.Repositories
 				Id = (int)reader["Id"],
 				Name = (string)reader["Name"],
 				Address = (string)reader["Address"],
-				// TODO current nbr of registered players
+				NbrOfPlayers = (int)reader["NbrOfPlayers"],
 				MinPlayer = (int)reader["MinPlayer"],
 				MaxPlayer = (int)reader["MaxPlayer"],
 				Categories = (string)reader["Categories"],
