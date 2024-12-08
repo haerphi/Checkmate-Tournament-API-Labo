@@ -283,12 +283,7 @@ namespace Checkmate.DAL.Repositories
 			{
 				switch (ex.Number)
 				{
-					case 50010: // Tournament not found
-					case 50011: // Tournament is full
-					case 50012: // Inscription date passed
-					case 50014: // Player ELO out of range
-					case 50015: // Player age out of range
-					case 50016: // Player already registered
+					case 50017:
 						throw new InvalidDataParamsException(ex.Message);
 					default:
 						Console.WriteLine(ex.Message);

@@ -109,3 +109,10 @@ EXEC sp_addmessage
     @msgtext = 'Player is already registered to the tournament.', -- Error message
     @lang = 'us_english'; -- Language
 GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50017, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = '%s', -- Error message -- player not egible
+    @lang = 'us_english'; -- L anguage
+GO;
