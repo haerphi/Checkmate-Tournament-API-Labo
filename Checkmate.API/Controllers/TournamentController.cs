@@ -74,17 +74,26 @@ namespace Checkmate.API.Controllers
 
 		[HttpDelete("{id}", Name = "DeleteTournament")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[Authorize(Roles = "Admin")]
 		public ActionResult Delete(int id)
 		{
 			try
 			{
+				Tournament tournament = m_TournamentService.GetById(id);
+				List<PlayerLight> players = m_TournamentService.GetPlayersOfTournament(id);
+
 				m_TournamentService.Delete(id);
 
-				// TODO send mail to all players
+				MailReceiver[] receivers = players.Select(p => new MailReceiver(p.Nickname, p.Email)).ToArray();
+				m_MailHelperService.BulkSendMailSameData<Tournament>(receivers, MailTemplate.SendTournamentCancelled, tournament);
 
 				return Ok();
+			}
+			catch (TournamentNotFoundException e)
+			{
+				return NotFound();
 			}
 			catch (Exception e)
 			{

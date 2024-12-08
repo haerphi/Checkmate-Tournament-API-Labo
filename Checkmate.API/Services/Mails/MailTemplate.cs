@@ -56,5 +56,18 @@ namespace Checkmate.API.Services.Mails
 
 			return email;
 		}
+
+		public static MimeMessage SendTournamentCancelled(Tournament tournament)
+		{
+			MimeMessage email = new MimeMessage();
+			email.Subject = "Tournois annulé! (●'◡'●)";
+			email.Body = new TextPart(TextFormat.Plain)
+			{
+				Text = $"Le tournois {tournament.Name} a été annulé ! \n\n" +
+					   "(┬┬﹏┬┬) \n\n\n" +
+					   "Cordalement Checkmate."
+			};
+			return email;
+		}
 	}
 }
