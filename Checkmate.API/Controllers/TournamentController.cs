@@ -243,5 +243,41 @@ namespace Checkmate.API.Controllers
 
 			return Ok();
 		}
+
+		[HttpPost("Start/{id}", Name = "StartTournament")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		[Authorize(Roles = "Admin")]
+		public ActionResult Start([FromRoute] int id, [FromBody] StartTournamentDTO stdto)
+		{
+			try
+			{
+				m_TournamentService.StartTournament(id);
+			}
+			catch (TournamentNotFoundException e)
+			{
+				return NotFound();
+			}
+			catch (Exception e) when (e is InvalidDataParamsException or TournamentAlreadyStartedException)
+			{
+				return BadRequest(new { error = e.Message });
+			}
+			catch (Exception e)
+			{
+				return Problem(e.Message);
+			}
+
+			if (stdto.NotifyPlayers)
+			{
+				Tournament tournament = m_TournamentService.GetById(id);
+				List<PlayerLight> players = m_TournamentService.GetPlayersOfTournament(id);
+				MailReceiver[] receivers = players.Select(p => new MailReceiver(p.Nickname, p.Email)).ToArray();
+				m_MailHelperService.BulkSendMailSameData<Tournament>(receivers, MailTemplate.SendTournamentStarted, tournament);
+			}
+
+			return Ok();
+		}
 	}
 }

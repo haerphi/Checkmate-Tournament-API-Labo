@@ -374,5 +374,39 @@ namespace Checkmate.DAL.Repositories
 				throw new Exception("Error canceling tournament participation", ex);
 			}
 		}
+
+		public void StartTournament(int tournamentId, int nbrOfRevenge = 1)
+		{
+			try
+			{
+				using (SqlCommand command = new SqlCommand("[Game].[StartTournament]", m_Connection))
+				{
+					// Parameters
+					command.CommandType = CommandType.StoredProcedure;
+					command.Parameters.AddWithValue("@tournamentId", tournamentId);
+					command.Parameters.AddWithValue("@nbrOfRevenge", nbrOfRevenge);
+					// Execute
+					command.ExecuteNonQuery();
+				}
+			}
+			catch (SqlException ex)
+			{
+				switch (ex.Number)
+				{
+					case 50010:
+					case 500018:
+					case 500019:
+						throw new InvalidDataParamsException(ex.Message);
+					default:
+						Console.WriteLine(ex.Message);
+						throw new Exception("SQL Error starting tournament", ex);
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw new Exception("Error starting tournament", ex);
+			}
+		}
 	}
 }

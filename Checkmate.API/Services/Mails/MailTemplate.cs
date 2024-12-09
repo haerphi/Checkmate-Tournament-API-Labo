@@ -84,5 +84,20 @@ namespace Checkmate.API.Services.Mails
 
 			return email;
 		}
+
+		public static MimeMessage SendTournamentStarted(Tournament data)
+		{
+			MimeMessage email = new MimeMessage();
+
+			email.Subject = "Le tournois a commencé! (●'◡'●)";
+			email.Body = new TextPart(TextFormat.Plain)
+			{
+				Text = $"Le tournois {data.Name} a commencé ! \n\n" +
+					   "(✿◡‿◡) \n\n\n" +
+					   "Cordalement Checkmate."
+			};
+
+			return email;
+		}
 	}
 }

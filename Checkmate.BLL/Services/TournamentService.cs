@@ -131,5 +131,17 @@ namespace Checkmate.BLL.Services
 			m_TournamentRepository.CancelTournamentParticipation(playerId, tournamentId, paranoid);
 			return true;
 		}
+
+		public void StartTournament(int tournamentId, int nbrOfRevenge = 1)
+		{
+			Tournament tournament = GetById(tournamentId);
+
+			if (tournament.Status != Domain.Enums.TournamentStatusEnum.Waiting)
+			{
+				throw new TournamentAlreadyStartedException();
+			}
+
+			m_TournamentRepository.StartTournament(tournamentId, nbrOfRevenge);
+		}
 	}
 }

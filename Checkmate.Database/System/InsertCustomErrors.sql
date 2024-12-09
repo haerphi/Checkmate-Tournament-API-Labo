@@ -116,3 +116,17 @@ EXEC sp_addmessage
     @msgtext = '%s', -- Error message -- player not egible
     @lang = 'us_english'; -- L anguage
 GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50018, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Not enought player to start the tournament.', -- Error message
+    @lang = 'us_english'; -- Language
+GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50019, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Inscription is not closed', -- Error message
+    @lang = 'us_english'; -- Language
+GO;

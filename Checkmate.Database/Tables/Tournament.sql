@@ -20,4 +20,5 @@
 	CONSTRAINT [CK_Tournament_MinPlayer_MaxPlayer_Count] CHECK([MinPlayer] BETWEEN 2 AND 32 AND [MaxPlayer] BETWEEN 2 AND 32),
 	CONSTRAINT [CK_Tournament_MinElo_MaxElo] CHECK ([MinElo] <= [MaxElo]),
 	CONSTRAINT [CK_Tournament_MinElo_MaxElo_Value] CHECK([MinElo] BETWEEN 0 AND 3000 AND [MaxElo] BETWEEN 0 AND 3000),
+	CONSTRAINT [CK_Tournament_Status] CHECK ([Status] IN ('Waiting', 'Running', 'Finished')),
 )
