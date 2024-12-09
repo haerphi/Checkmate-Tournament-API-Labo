@@ -20,6 +20,8 @@ namespace Checkmate.Domain.Models
 		public DateTime? DeletedAt { get; set; }
 		public DateTime EndInscriptionAt { get; set; } = DateTime.Now;
 		public required string Categories { get; set; }
+
+		public IEnumerable<GameRound> Rounds { get; set; } = [];
 	}
 
 	public class EligibleTournament : Tournament

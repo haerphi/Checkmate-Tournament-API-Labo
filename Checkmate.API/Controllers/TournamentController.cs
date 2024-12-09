@@ -127,11 +127,11 @@ namespace Checkmate.API.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public ActionResult<TournamentDTO> GetById(int id)
+		public ActionResult<TournamentDTO> GetById([FromRoute] int id, [FromQuery] int? round)
 		{
 			try
 			{
-				Tournament tournament = m_TournamentService.GetById(id);
+				Tournament tournament = m_TournamentService.GetById(id, round);
 				TournamentDTO tournamentDTO = tournament.ToTournamentDTO();
 				tournamentDTO.Players = m_TournamentService.GetPlayersOfTournament(id);
 

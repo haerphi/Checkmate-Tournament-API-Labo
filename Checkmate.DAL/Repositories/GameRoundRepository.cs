@@ -38,7 +38,7 @@ FROM [Game].[GameRound] WHERE [Id] = @roundId";
 			return gameRound;
 		}
 
-		public List<GameRound> GetRoundsFromTournament(int tournamentId, int? round)
+		public IEnumerable<GameRound> GetRoundsFromTournament(int tournamentId, int? round)
 		{
 			string where = "[TournamentId] = @tournamentId";
 
@@ -54,6 +54,12 @@ WHERE {where}";
 			using (SqlCommand command = new SqlCommand(query, m_Connection))
 			{
 				command.Parameters.AddWithValue("@tournamentId", tournamentId);
+
+				if (round.HasValue)
+				{
+					command.Parameters.AddWithValue("@round", round.Value);
+				}
+
 				List<GameRound> rounds = new List<GameRound>();
 				using (SqlDataReader reader = command.ExecuteReader())
 				{

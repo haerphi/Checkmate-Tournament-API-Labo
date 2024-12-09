@@ -6,7 +6,7 @@ namespace Checkmate.DAL.Repositories.Interfaces
 	public interface IGameRoundRepository
 	{
 		public GameRound? GetById(int roundId);
-		public List<GameRound> GetRoundsFromTournament(int tournamentId, int? round);
+		public IEnumerable<GameRound> GetRoundsFromTournament(int tournamentId, int? round);
 		public void UpdateRoundResult(int roundId, GameRoundResultEnum? result);
 	}
 }

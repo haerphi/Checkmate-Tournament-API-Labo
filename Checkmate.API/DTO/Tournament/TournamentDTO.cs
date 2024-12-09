@@ -22,7 +22,7 @@ namespace Checkmate.API.DTO.Tournament
 		public required DateTime UpdatedAt { get; set; }
 		public required DateTime? DeletedAt { get; set; }
 		public IEnumerable<PlayerLight> Players { get; set; } = [];
-
+		public IEnumerable<GameRound> Rounds { get; set; } = [];
 		public required bool CanRegistered { get; set; }
 		public bool IsRegistered { get; set; } = false;
 		public string reason { get; set; } = "";

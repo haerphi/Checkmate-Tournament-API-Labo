@@ -96,13 +96,18 @@ namespace Checkmate.BLL.Services
 			return eligibleTournaments;
 		}
 
-		public Tournament GetById(int id)
+		public Tournament GetById(int id, int? round = null)
 		{
 			Tournament? tournament = m_TournamentRepository.GetById(id);
 
 			if (tournament == null)
 			{
 				throw new TournamentNotFoundException();
+			}
+
+			if (tournament.Status != TournamentStatusEnum.Waiting)
+			{
+				tournament.Rounds = m_GameRoundRepository.GetRoundsFromTournament(id, round ?? tournament.CurrentRound);
 			}
 
 			return tournament;
