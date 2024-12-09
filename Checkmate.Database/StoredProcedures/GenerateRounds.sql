@@ -63,7 +63,7 @@ BEGIN
 			BEGIN
 				WHILE @tmpNbrOfRevenge > 0
 					BEGIN
-					    IF @tmpNbrOfRevenge % 2 = 0
+					    IF @tmpNbrOfRevenge % 2 = 1
 							INSERT INTO @rounds (WithePlayerId, BlackPlayerId, RoundNbr)
 								SELECT 
 									CASE WHEN p2.PlayerId IS NULL THEN -1 ELSE p2.PlayerId END AS BlackPlayerId, -- Bye handling
