@@ -5,4 +5,8 @@ INSERT INTO [Game].[AgeCategory] ([Name], [MinAge], [MaxAge]) VALUES ('Veteran',
 
 /* Default player */
 INSERT INTO [Person].[Player] ([Nickname], [Email], [Password], [Birthdate], [Gender], [ELO], [Role], [PasswordChanged], [CreatedAt], [UpdatedAt])
-	VALUES ('plow','plow@mail.com','$argon2id$v=19$m=65536,t=3,p=1$XruJVMmclv125SN55wjR8w$0nd3yIZ3vxJRHKaTkz7RgX8uUmrNsJDOfu0XS4ADarI', '2024-12-05 07:59:36.2133333','Male','1200','Admin',true,'2024-12-06 17:13:02.7600000','2024-12-06 17:13:02.7600000');
+	VALUES ('plow','plow@mail.com','$argon2id$v=19$m=65536,t=3,p=1$XruJVMmclv125SN55wjR8w$0nd3yIZ3vxJRHKaTkz7RgX8uUmrNsJDOfu0XS4ADarI', '2024-12-05 07:59:36.2133333','Male','1200','Admin',1,'2024-12-06 17:13:02.7600000','2024-12-06 17:13:02.7600000'),
+		 ('jane','jane@mail.com','$argon2id$v=19$m=65536,t=3,p=1$XruJVMmclv125SN55wjR8w$0nd3yIZ3vxJRHKaTkz7RgX8uUmrNsJDOfu0XS4ADarI', '2024-12-05 07:59:36.2133333','Female','1200','Player',1,'2024-12-06 17:13:02.7600000','2024-12-06 17:13:02.7600000'),
+		 ('john','john@mail.com','$argon2id$v=19$m=65536,t=3,p=1$XruJVMmclv125SN55wjR8w$0nd3yIZ3vxJRHKaTkz7RgX8uUmrNsJDOfu0XS4ADarI', '2024-12-05 07:59:36.2133333','Male','1200','Player',1,'2024-12-06 17:13:02.7600000','2024-12-06 17:13:02.7600000'),
+		 ('dipper','dipper@mail.com','$argon2id$v=19$m=65536,t=3,p=1$XruJVMmclv125SN55wjR8w$0nd3yIZ3vxJRHKaTkz7RgX8uUmrNsJDOfu0XS4ADarI', '2024-12-05 07:59:36.2133333','Male','1200','Player',1,'2024-12-06 17:13:02.7600000','2024-12-06 17:13:02.7600000');
+		
