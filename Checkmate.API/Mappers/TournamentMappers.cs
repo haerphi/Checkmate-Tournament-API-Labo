@@ -41,7 +41,7 @@ namespace Checkmate.API.Mappers
 				DeletedAt = tournament.DeletedAt,
 				EndInscriptionAt = tournament.EndInscriptionAt,
 				Categories = tournament.Categories.Split(','),
-				CanRegistered = tournament.NbrOfPlayers < tournament.MaxPlayer,
+				CanRegistered = tournament.NbrOfPlayers < tournament.MaxPlayer && tournament.EndInscriptionAt < DateTime.Now,
 			};
 		}
 
