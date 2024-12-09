@@ -14,5 +14,6 @@ namespace Checkmate.BLL.Services.Interfaces
 		public bool RegisterPlayerToTournament(int playerId, int tournamentId);
 		public List<PlayerLight> GetPlayersOfTournament(int tournamentId);
 		public string CheckPlayerEligibility(int playerId, int tournamentId);
+		public bool CancelTournamentParticipation(int playerId, int tournamentId, bool paranoid = true);
 	}
 }

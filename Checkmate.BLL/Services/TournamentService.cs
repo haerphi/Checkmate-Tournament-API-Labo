@@ -8,11 +8,13 @@ namespace Checkmate.BLL.Services
 {
 	public class TournamentService : ITournamentService
 	{
-		public readonly ITournamentRepository m_TournamentRepository;
+		private readonly ITournamentRepository m_TournamentRepository;
+		private readonly IPlayerService m_playerService;
 
-		public TournamentService(ITournamentRepository tournamentRepository)
+		public TournamentService(ITournamentRepository tournamentRepository, IPlayerService playerService)
 		{
 			m_TournamentRepository = tournamentRepository;
+			m_playerService = playerService;
 		}
 
 		public string CheckPlayerEligibility(int playerId, int tournamentId)
@@ -114,6 +116,20 @@ namespace Checkmate.BLL.Services
 		public bool RegisterPlayerToTournament(int playerId, int tournamentId)
 		{
 			return m_TournamentRepository.RegisterPlayerToTournament(playerId, tournamentId);
+		}
+
+		public bool CancelTournamentParticipation(int playerId, int tournamentId, bool paranoid = true)
+		{
+			Tournament tournament = GetById(tournamentId);
+			if (tournament.Status != Domain.Enums.TournamentStatusEnum.Waiting)
+			{
+				throw new TournamentAlreadyStartedException();
+			}
+
+			Player player = m_playerService.GetById(playerId);
+
+			m_TournamentRepository.CancelTournamentParticipation(playerId, tournamentId, paranoid);
+			return true;
 		}
 	}
 }

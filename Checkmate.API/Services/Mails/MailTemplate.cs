@@ -6,6 +6,11 @@ namespace Checkmate.API.Services.Mails
 {
 	public static class MailTemplate
 	{
+		public struct TournamentPlayer
+		{
+			public Player User { get; set; }
+			public Tournament Tournament { get; set; }
+		}
 		public static MimeMessage WelcomeMail(Player user)
 		{
 			MimeMessage email = new MimeMessage();
@@ -36,13 +41,7 @@ namespace Checkmate.API.Services.Mails
 			return email;
 		}
 
-		public struct SuccessfullyRegisterToTournamentData
-		{
-			public Player User { get; set; }
-			public Tournament Tournament { get; set; }
-		}
-
-		public static MimeMessage SendSuccessfullyRegisterToTournament(SuccessfullyRegisterToTournamentData data)
+		public static MimeMessage SendSuccessfullyRegisterToTournament(TournamentPlayer data)
 		{
 			MimeMessage email = new MimeMessage();
 			email.Subject = "Inscription au tournois réussie! (●'◡'●)";
@@ -67,6 +66,22 @@ namespace Checkmate.API.Services.Mails
 					   "(┬┬﹏┬┬) \n\n\n" +
 					   "Cordalement Checkmate."
 			};
+			return email;
+		}
+
+		public static MimeMessage SendCancelTournamentParticipation(TournamentPlayer data)
+		{
+			MimeMessage email = new MimeMessage();
+
+			email.Subject = "Annulation d'inscription au tournois! `(*>﹏<*)′";
+			email.Body = new TextPart(TextFormat.Plain)
+			{
+				Text = $"Dommage {data.User.Nickname} ! \n\n" +
+						$"Tu t'es désinscrit du tournois {data.Tournament.Name} ! \n\n" +
+					   "(┬┬﹏┬┬) \n\n\n" +
+					   "Cordalement Checkmate."
+			};
+
 			return email;
 		}
 	}

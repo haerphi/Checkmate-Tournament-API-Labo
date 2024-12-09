@@ -187,13 +187,58 @@ namespace Checkmate.API.Controllers
 				Player player = m_PlayerService.GetById(playerIdToRegister);
 
 				MailReceiver receiver = new MailReceiver(player.Nickname, player.Email);
-				SuccessfullyRegisterToTournamentData data = new SuccessfullyRegisterToTournamentData
+				TournamentPlayer data = new TournamentPlayer
 				{
 					User = player,
 					Tournament = m_TournamentService.GetById(rpttdto.TournamentId)
 				};
 
 				m_MailHelperService.SendMail(receiver, MailTemplate.SendSuccessfullyRegisterToTournament, data);
+			}
+
+			return Ok();
+		}
+
+		[HttpDelete("CancelParticipation", Name = "CancelTournamentParticipation")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		[Authorize(Roles = "Admin,Player")]
+		public ActionResult CancelParticipation([FromBody] RegisterPlayerToTournamentDTO rpttdto)
+		{
+			if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int reqPlayerId))
+			{
+				return Unauthorized();
+			}
+			if (rpttdto.PlayerId is not null)
+			{
+				if (!Enum.TryParse(User.FindFirst(ClaimTypes.Role)?.Value, out RoleEnum role) || role != RoleEnum.Admin)
+				{
+					return Unauthorized();
+				}
+			}
+
+			int playerIdToCancel = rpttdto.PlayerId ?? reqPlayerId;
+			try
+			{
+				m_TournamentService.CancelTournamentParticipation(playerIdToCancel, rpttdto.TournamentId);
+			}
+			catch (Exception e) when (e is InvalidDataParamsException or TournamentNotFoundException or PlayerNotFoundException or TournamentAlreadyStartedException)
+			{
+				return BadRequest(new { error = e.Message });
+			}
+			catch (Exception e)
+			{
+				return Problem(e.Message);
+			}
+
+			if (rpttdto.notifyPlayer)
+			{
+				// send email
+				Player player = m_PlayerService.GetById(playerIdToCancel);
+				MailReceiver receiver = new MailReceiver(player.Nickname, player.Email);
+				Tournament tournament = m_TournamentService.GetById(rpttdto.TournamentId);
+				m_MailHelperService.SendMail(receiver, MailTemplate.SendCancelTournamentParticipation, new TournamentPlayer() { Tournament = tournament, User = player });
 			}
 
 			return Ok();

@@ -11,5 +11,6 @@ namespace Checkmate.DAL.Repositories.Interfaces
 		public bool RegisterPlayerToTournament(int playerId, int tournamentId);
 		public List<PlayerLight> GetPlayersOfTournament(int tournamentId);
 		public string CheckPlayerEligibility(int playerId, int tournamentId);
+		public void CancelTournamentParticipation(int playerId, int tournamentId, bool paranoid = true);
 	}
 }

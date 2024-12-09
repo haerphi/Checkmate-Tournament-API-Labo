@@ -2,5 +2,8 @@
 {
 	public class TournamentNotFoundException : Exception
 	{
+		public TournamentNotFoundException() : base("Tournament not found")
+		{
+		}
 	}
 }

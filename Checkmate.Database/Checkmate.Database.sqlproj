@@ -76,6 +76,7 @@
     <Build Include="Views\V_ActiveAgeCategories.sql" />
     <Build Include="StoredProcedures\GetPlayersForTournament.sql" />
     <Build Include="StoredProcedures\CheckPlayerEligibility.sql" />
+    <Build Include="StoredProcedures\CancelTournamentParticipation.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="profiles\Checkmate.Database.publish.xml" />

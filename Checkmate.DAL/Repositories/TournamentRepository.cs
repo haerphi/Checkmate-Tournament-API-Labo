@@ -352,5 +352,27 @@ namespace Checkmate.DAL.Repositories
 				throw; // Retain original stack trace
 			}
 		}
+
+		public void CancelTournamentParticipation(int playerId, int tournamentId, bool paranoid = true)
+		{
+			try
+			{
+				using (SqlCommand command = new SqlCommand("[Game].[CancelTournamentParticipation]", m_Connection))
+				{
+					// Parameters
+					command.CommandType = CommandType.StoredProcedure;
+					command.Parameters.AddWithValue("@playerId", playerId);
+					command.Parameters.AddWithValue("@tournamentId", tournamentId);
+					command.Parameters.AddWithValue("@paranoid", paranoid);
+					// Execute
+					command.ExecuteNonQuery();
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw new Exception("Error canceling tournament participation", ex);
+			}
+		}
 	}
 }
