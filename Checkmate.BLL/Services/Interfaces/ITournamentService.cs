@@ -18,5 +18,6 @@ namespace Checkmate.BLL.Services.Interfaces
 		public bool CancelTournamentParticipation(int playerId, int tournamentId, bool paranoid = true);
 		public void StartTournament(int tournamentId, int nbrOfRevenge = 1);
 		public void UpdateRoundResult(int roundId, GameRoundResultEnum? result);
+		public int NextRound(int tournamentId);
 	}
 }

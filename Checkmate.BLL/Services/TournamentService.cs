@@ -163,5 +163,12 @@ namespace Checkmate.BLL.Services
 
 			m_GameRoundRepository.UpdateRoundResult(roundId, result);
 		}
+
+		public int NextRound(int tournamentId)
+		{
+			Tournament t = GetById(tournamentId);
+
+			return m_TournamentRepository.NextRound(tournamentId);
+		}
 	}
 }

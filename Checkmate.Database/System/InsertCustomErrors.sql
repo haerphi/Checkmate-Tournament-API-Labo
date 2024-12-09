@@ -130,3 +130,16 @@ EXEC sp_addmessage
     @msgtext = 'Inscription is not closed', -- Error message
     @lang = 'us_english'; -- Language
 GO;
+
+EXEC sp_addmessage 
+    @msgnum = 50020, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'Not all round are finished', -- Error message
+    @lang = 'us_english'; -- Language
+GO
+
+EXEC sp_addmessage 
+    @msgnum = 50021, -- Unique error number (must be >50000 for user-defined messages)
+    @severity = 16,  -- user-defined errors
+    @msgtext = 'No more round', -- Error message
+    @lang = 'us_english'; -- Language

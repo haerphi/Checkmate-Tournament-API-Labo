@@ -408,5 +408,45 @@ namespace Checkmate.DAL.Repositories
 				throw new Exception("Error starting tournament", ex);
 			}
 		}
+
+		public int NextRound(int tournamentId)
+		{
+			try
+			{
+				using (SqlCommand command = new SqlCommand("[Game].[TournamentNextRound]", m_Connection))
+				{
+					// Parameters
+					command.CommandType = CommandType.StoredProcedure;
+					command.Parameters.AddWithValue("@tournamentId", tournamentId);
+					// Output parameter (new id)
+					SqlParameter outputParameter = new SqlParameter("@nextRound", SqlDbType.Int)
+					{
+						Direction = ParameterDirection.Output
+					};
+					command.Parameters.Add(outputParameter);
+					// Execute
+					command.ExecuteNonQuery();
+					return (int)outputParameter.Value;
+				}
+			}
+			catch (SqlException ex)
+			{
+				switch (ex.Number)
+				{
+					case 50010:
+					case 50020:
+					case 50021:
+						throw new InvalidDataParamsException(ex.Message);
+					default:
+						Console.WriteLine(ex.Message);
+						throw new Exception("SQL Error Next round", ex);
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw new Exception("Error next round", ex);
+			}
+		}
 	}
 }

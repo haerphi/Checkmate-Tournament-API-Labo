@@ -307,5 +307,32 @@ namespace Checkmate.API.Controllers
 			}
 			return Ok();
 		}
+
+		[HttpPost("NextRound/{tournamentId}", Name = "NextRound")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		[Authorize(Roles = "Admin")]
+		public ActionResult NextRound([FromRoute] int tournamentId)
+		{
+			try
+			{
+				int nextRound = m_TournamentService.NextRound(tournamentId);
+				return Ok(nextRound);
+			}
+			catch (TournamentNotFoundException e)
+			{
+				return NotFound();
+			}
+			catch (Exception e) when (e is InvalidDataParamsException)
+			{
+				return BadRequest(new { error = e.Message });
+			}
+			catch (Exception e)
+			{
+				return Problem(e.Message);
+			}
+		}
 	}
 }
