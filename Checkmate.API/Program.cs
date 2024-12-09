@@ -35,6 +35,7 @@ builder.Services.AddScoped<AuthService>();
 // DAL injections
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
 builder.Services.AddScoped<ITournamentRepository, TournamentRepository>();
+builder.Services.AddScoped<IGameRoundRepository, GameRoundRepository>();
 
 // BLL injections
 builder.Services.AddScoped<IPlayerService, PlayerService>();

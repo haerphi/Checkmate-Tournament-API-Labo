@@ -279,5 +279,33 @@ namespace Checkmate.API.Controllers
 
 			return Ok();
 		}
+
+		[HttpPatch("Round/{roundId}", Name = "UpdateRoundResult")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		[Authorize(Roles = "Admin")]
+		public ActionResult UpdateRoundResult([FromRoute] int roundId, [FromBody] UpdateRoundResultDTO urrdto)
+		{
+			try
+			{
+				m_TournamentService.UpdateRoundResult(roundId, urrdto.Result);
+			}
+			catch (Exception e) when (e is TournamentNotFoundException or GameRoundNotFoundException)
+			{
+				return NotFound();
+			}
+			catch (Exception e) when (e is InvalidDataParamsException or InvalidRoundException)
+			{
+				return BadRequest(new { error = e.Message });
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return Problem(e.Message);
+			}
+			return Ok();
+		}
 	}
 }

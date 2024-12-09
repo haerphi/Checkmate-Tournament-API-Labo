@@ -1,6 +1,7 @@
 ﻿using Checkmate.BLL.Services.Interfaces;
 using Checkmate.DAL.Repositories.Interfaces;
 using Checkmate.Domain.CustomExceptions;
+using Checkmate.Domain.Enums;
 using Checkmate.Domain.Models;
 using Checkmate.Domain.Models.Paginations;
 
@@ -9,12 +10,14 @@ namespace Checkmate.BLL.Services
 	public class TournamentService : ITournamentService
 	{
 		private readonly ITournamentRepository m_TournamentRepository;
-		private readonly IPlayerService m_playerService;
+		private readonly IPlayerService m_PlayerService;
+		private readonly IGameRoundRepository m_GameRoundRepository;
 
-		public TournamentService(ITournamentRepository tournamentRepository, IPlayerService playerService)
+		public TournamentService(ITournamentRepository tournamentRepository, IPlayerService playerService, IGameRoundRepository gameRoundRepository)
 		{
 			m_TournamentRepository = tournamentRepository;
-			m_playerService = playerService;
+			m_PlayerService = playerService;
+			m_GameRoundRepository = gameRoundRepository;
 		}
 
 		public string CheckPlayerEligibility(int playerId, int tournamentId)
@@ -126,7 +129,7 @@ namespace Checkmate.BLL.Services
 				throw new TournamentAlreadyStartedException();
 			}
 
-			Player player = m_playerService.GetById(playerId);
+			Player player = m_PlayerService.GetById(playerId);
 
 			m_TournamentRepository.CancelTournamentParticipation(playerId, tournamentId, paranoid);
 			return true;
@@ -142,6 +145,23 @@ namespace Checkmate.BLL.Services
 			}
 
 			m_TournamentRepository.StartTournament(tournamentId, nbrOfRevenge);
+		}
+
+		public void UpdateRoundResult(int roundId, GameRoundResultEnum? result)
+		{
+			GameRound? gameRound = m_GameRoundRepository.GetById(roundId);
+			if (gameRound == null)
+			{
+				throw new GameRoundNotFoundException();
+			}
+
+			Tournament tournament = GetById(gameRound.TournamentId);
+			if (tournament.CurrentRound != gameRound.Round)
+			{
+				throw new InvalidRoundException();
+			}
+
+			m_GameRoundRepository.UpdateRoundResult(roundId, result);
 		}
 	}
 }

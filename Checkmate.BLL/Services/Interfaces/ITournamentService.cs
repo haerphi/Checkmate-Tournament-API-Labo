@@ -1,4 +1,5 @@
-﻿using Checkmate.Domain.Models;
+﻿using Checkmate.Domain.Enums;
+using Checkmate.Domain.Models;
 using Checkmate.Domain.Models.Paginations;
 
 namespace Checkmate.BLL.Services.Interfaces
@@ -16,5 +17,6 @@ namespace Checkmate.BLL.Services.Interfaces
 		public string CheckPlayerEligibility(int playerId, int tournamentId);
 		public bool CancelTournamentParticipation(int playerId, int tournamentId, bool paranoid = true);
 		public void StartTournament(int tournamentId, int nbrOfRevenge = 1);
+		public void UpdateRoundResult(int roundId, GameRoundResultEnum? result);
 	}
 }
