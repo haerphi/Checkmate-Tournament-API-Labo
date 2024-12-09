@@ -334,5 +334,25 @@ namespace Checkmate.API.Controllers
 				return Problem(e.Message);
 			}
 		}
+
+		[HttpGet("Scores/{tournamentId}", Name = "Scores")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public ActionResult<IEnumerable<Score>> Scores([FromRoute] int tournamentId)
+		{
+			try
+			{
+				return Ok(m_TournamentService.Scores(tournamentId));
+			}
+			catch (TournamentNotFoundException e)
+			{
+				return NotFound();
+			}
+			catch (Exception e)
+			{
+				return Problem(e.Message);
+			}
+		}
 	}
 }

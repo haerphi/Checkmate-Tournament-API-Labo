@@ -448,5 +448,38 @@ namespace Checkmate.DAL.Repositories
 				throw new Exception("Error next round", ex);
 			}
 		}
+
+		public IEnumerable<Score> Scores(int tournamentId)
+		{
+			List<Score> scores = [];
+
+			string query = $@"SELECT [PlayerId], [Nickname], [PlayedGames], [Wins], [Losses], [Draws], [Points]
+FROM [Game].[V_Scoreboard]
+WHERE [TournamentId] = @tournamentId";
+
+			using (SqlCommand command = new SqlCommand(query, m_Connection))
+			{
+				command.CommandType = CommandType.Text;
+				command.Parameters.AddWithValue("@tournamentId", tournamentId);
+				using (SqlDataReader reader = command.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						scores.Add(new Score
+						{
+							PlayerId = (int)reader["PlayerId"],
+							Nickname = (string)reader["Nickname"],
+							PlayedGame = (int)reader["PlayedGames"],
+							Wins = (int)reader["Wins"],
+							Losses = (int)reader["Losses"],
+							Draws = (int)reader["Draws"],
+							Points = (decimal)reader["Points"]
+						});
+					}
+				}
+			}
+
+			return scores;
+		}
 	}
 }

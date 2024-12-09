@@ -82,6 +82,8 @@
     <Build Include="StoredProcedures\GenerateRounds.sql" />
     <Build Include="StoredProcedures\UpdateRoundResult.sql" />
     <Build Include="StoredProcedures\TournamentNextRound.sql" />
+    <Build Include="Views\V_Scoreboard.sql" />
+    <Build Include="StoredProcedures\IsWinner.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="profiles\Checkmate.Database.publish.xml" />

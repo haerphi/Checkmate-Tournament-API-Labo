@@ -19,5 +19,6 @@ namespace Checkmate.BLL.Services.Interfaces
 		public void StartTournament(int tournamentId, int nbrOfRevenge = 1);
 		public void UpdateRoundResult(int roundId, GameRoundResultEnum? result);
 		public int NextRound(int tournamentId);
+		public IEnumerable<Score> Scores(int tournamentId);
 	}
 }

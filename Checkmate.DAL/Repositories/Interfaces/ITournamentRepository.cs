@@ -14,5 +14,6 @@ namespace Checkmate.DAL.Repositories.Interfaces
 		public void CancelTournamentParticipation(int playerId, int tournamentId, bool paranoid = true);
 		public void StartTournament(int tournamentId, int nbrOfRevenge = 1);
 		public int NextRound(int tournamentId);
+		public IEnumerable<Score> Scores(int tournamentId);
 	}
 }

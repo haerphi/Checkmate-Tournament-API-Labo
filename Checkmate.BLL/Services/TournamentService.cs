@@ -175,5 +175,11 @@ namespace Checkmate.BLL.Services
 
 			return m_TournamentRepository.NextRound(tournamentId);
 		}
+
+		public IEnumerable<Score> Scores(int tournamentId)
+		{
+			Tournament t = GetById(tournamentId);
+			return m_TournamentRepository.Scores(tournamentId);
+		}
 	}
 }
