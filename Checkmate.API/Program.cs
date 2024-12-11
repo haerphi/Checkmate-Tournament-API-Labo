@@ -13,6 +13,24 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(service =>
+{
+	service.AddPolicy("FFA", policy =>
+	{
+		policy.AllowAnyOrigin();
+		policy.AllowAnyMethod();
+		policy.AllowAnyHeader();
+	});
+
+	service.AddPolicy("Dev", policy =>
+	{
+		policy.WithOrigins("http://localhost:4200");
+		policy.AllowAnyMethod();
+		policy.AllowAnyHeader();
+	});
+});
+
+
 //Permet de recuperer des enums sur base d'une string
 builder.Services.AddControllers().AddJsonOptions(option =>
 {
@@ -73,6 +91,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("FFA");
 
 app.UseAuthentication();
 app.UseAuthorization();
