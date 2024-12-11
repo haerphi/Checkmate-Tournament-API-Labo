@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "6441630a-6933-4095-af76-c368b8b0a35f",
+		"name": "CheckMate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9872571"
+	},
+	"item": [
+		{
+			"name": "Player",
+			"item": [
+				{
+					"name": "Add player",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nickname\": \"Jane\",\r\n  \"email\": \"Jane@mail.com\",\r\n  \"birthDate\": \"2024-12-05T07:59:36.213Z\",\r\n  \"gender\": \"Female\",\r\n  \"elo\": 1200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/Player",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"Player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllPlayers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/player?tournamentId=2&limit=99999",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"player"
+							],
+							"query": [
+								{
+									"key": "tournamentId",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "99999"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tournament",
+			"item": [
+				{
+					"name": "Create tournament",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Tournament1\",\r\n  \"address\": \"strin223g\",\r\n  \"minPlayer\": 2,\r\n  \"maxPlayer\": 4,\r\n  \"minElo\": 1000,\r\n  \"maxElo\": 3000,\r\n  \"isWomenOnly\": false,\r\n  \"endInscriptionAt\": null,\r\n  \"categories\": [\r\n    \"junior\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/tournament?sendInvitations=true",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tournament"
+							],
+							"query": [
+								{
+									"key": "sendInvitations",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete tournament",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/tournament/1017",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tournament",
+								"1017"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all active tournament",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/tournament/GetAllActive",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tournament",
+								"GetAllActive"
+							],
+							"query": [
+								{
+									"key": "playerId",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tournament",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/tournament/1?round=1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tournament",
+								"1"
+							],
+							"query": [
+								{
+									"key": "round",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register player",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tournamentId\": 1,\r\n  \"playerId\": 4,\r\n  \"notifyPlayer\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/Tournament/RegisterPlayer",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"Tournament",
+								"RegisterPlayer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel participation",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"tournamentId\": 1018,\r\n  \"playerId\": 1,\r\n  \"notifyPlayer\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/Tournament/CancelParticipation",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"Tournament",
+								"CancelParticipation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start tournament",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"notifyPlayers\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/Tournament/Start/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"Tournament",
+								"Start",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update round result",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"result\": \"White\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/Tournament/Round/5",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"Tournament",
+								"Round",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Next Round",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/Tournament/NextRound/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"Tournament",
+								"NextRound",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scoreboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/Tournament/Scores/1",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"Tournament",
+								"Scores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"auth_token\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"email\": \"plow@mail.com\",\r\n    \"nickname\": \"plow\",\r\n    \"password\": \"hello\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/Auth/Login",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"Auth",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"hello\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/Auth/ChangePassword",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"Auth",
+								"ChangePassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
