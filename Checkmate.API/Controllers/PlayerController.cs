@@ -5,6 +5,7 @@ using Checkmate.API.Services.Mails;
 using Checkmate.BLL.Services.Interfaces;
 using Checkmate.Domain.CustomExceptions;
 using Checkmate.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Checkmate.API.Controllers
@@ -26,7 +27,7 @@ namespace Checkmate.API.Controllers
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		//[Authorize(Roles = "Admin,Player")]
+		[Authorize(Roles = "Admin,Player")]
 		public ActionResult<PlayerDTO> Create([FromBody] PlayerCreateDTO playerDTO)
 		{
 			if (!ModelState.IsValid)
