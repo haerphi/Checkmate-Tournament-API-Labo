@@ -4,9 +4,11 @@ using Checkmate.API.Services;
 using Checkmate.API.Services.Mails;
 using Checkmate.BLL.Services.Interfaces;
 using Checkmate.Domain.CustomExceptions;
+using Checkmate.Domain.Enums;
 using Checkmate.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Checkmate.API.Controllers
 {
@@ -55,9 +57,43 @@ namespace Checkmate.API.Controllers
 
 		[HttpGet("{id}", Name = "GetById")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		[Authorize(Roles = "Admin,Player")]
 		public ActionResult<PlayerDTO> GetById(int id)
 		{
-			return Ok(id);
+			if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int reqPlayerId))
+			{
+				return Unauthorized();
+			}
+
+			if (id != -1)
+			{
+				if (!Enum.TryParse(User.FindFirst(ClaimTypes.Role)?.Value, out RoleEnum role) || role != RoleEnum.Admin)
+				{
+					return Unauthorized();
+				}
+			}
+
+			int playerId = id == -1 ? reqPlayerId : id;
+
+			Player? player;
+
+			try
+			{
+				player = m_PlayerService.GetById(playerId);
+			}
+			catch (PlayerNotFoundException e)
+			{
+				return NotFound();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return Problem(e.Message);
+			}
+
+			return Ok(player.ToPlayerDTO());
 		}
 	}
 }
