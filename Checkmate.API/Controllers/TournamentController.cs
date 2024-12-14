@@ -106,11 +106,28 @@ namespace Checkmate.API.Controllers
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public ActionResult<IEnumerable<TournamentDTO>> GetAllActive([FromQuery] TournamentPagination? pagination, int? playerId = null)
 		{
+			int? playerIdToCheck = playerId;
+
+			if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int reqPlayerId))
+			{
+				if (playerIdToCheck is not null)
+				{
+					if (!Enum.TryParse(User.FindFirst(ClaimTypes.Role)?.Value, out RoleEnum role) || role != RoleEnum.Admin)
+					{
+						return Unauthorized();
+					}
+				}
+				else
+				{
+					playerIdToCheck = reqPlayerId;
+				}
+			}
+
 			try
 			{
-				if (playerId is not null)
+				if (playerIdToCheck is not null)
 				{
-					return Ok(m_TournamentService.GetAllActive(pagination, (int)playerId).Select(t => t.ToTournamentDTO()).ToList());
+					return Ok(m_TournamentService.GetAllActive(pagination, (int)playerIdToCheck).Select(t => t.ToTournamentDTO()).ToList());
 				}
 				else
 				{
