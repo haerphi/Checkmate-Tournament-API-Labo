@@ -60,11 +60,11 @@ namespace Checkmate.API.Controllers
 
 			catch (InvalidDataParamsException e)
 			{
-				return BadRequest(new { error = e.Message });
+				return BadRequest(new { message = e.Message });
 			}
 			catch (InvalidEndOfInscriptionDateException e)
 			{
-				return BadRequest(new { error = "TOURNAMENT_ADD_INVALID_END_OF_INSCRIPTION_DATE" });
+				return BadRequest(new { message = "TOURNAMENT_ADD_INVALID_END_OF_INSCRIPTION_DATE" });
 			}
 			catch (Exception e)
 			{
@@ -114,7 +114,7 @@ namespace Checkmate.API.Controllers
 				{
 					if (!Enum.TryParse(User.FindFirst(ClaimTypes.Role)?.Value, out RoleEnum role) || role != RoleEnum.Admin)
 					{
-						return Unauthorized();
+						return Forbid();
 					}
 				}
 				else
@@ -173,14 +173,14 @@ namespace Checkmate.API.Controllers
 		{
 			if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int reqPlayerId))
 			{
-				return Unauthorized();
+				return Forbid();
 			}
 
 			if (rpttdto.PlayerId is not null)
 			{
 				if (!Enum.TryParse(User.FindFirst(ClaimTypes.Role)?.Value, out RoleEnum role) || role != RoleEnum.Admin)
 				{
-					return Unauthorized();
+					return Forbid();
 				}
 			}
 
@@ -192,7 +192,7 @@ namespace Checkmate.API.Controllers
 			}
 			catch (InvalidDataParamsException e)
 			{
-				return BadRequest(new { error = e.Message });
+				return BadRequest(new { message = e.Message });
 			}
 			catch (Exception e)
 			{
@@ -225,13 +225,13 @@ namespace Checkmate.API.Controllers
 		{
 			if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int reqPlayerId))
 			{
-				return Unauthorized();
+				return Forbid();
 			}
 			if (rpttdto.PlayerId is not null)
 			{
 				if (!Enum.TryParse(User.FindFirst(ClaimTypes.Role)?.Value, out RoleEnum role) || role != RoleEnum.Admin)
 				{
-					return Unauthorized();
+					return Forbid();
 				}
 			}
 
@@ -242,7 +242,7 @@ namespace Checkmate.API.Controllers
 			}
 			catch (Exception e) when (e is InvalidDataParamsException or TournamentNotFoundException or PlayerNotFoundException or TournamentAlreadyStartedException)
 			{
-				return BadRequest(new { error = e.Message });
+				return BadRequest(new { message = e.Message });
 			}
 			catch (Exception e)
 			{
@@ -279,7 +279,7 @@ namespace Checkmate.API.Controllers
 			}
 			catch (Exception e) when (e is InvalidDataParamsException or TournamentAlreadyStartedException)
 			{
-				return BadRequest(new { error = e.Message });
+				return BadRequest(new { message = e.Message });
 			}
 			catch (Exception e)
 			{
@@ -315,7 +315,7 @@ namespace Checkmate.API.Controllers
 			}
 			catch (Exception e) when (e is InvalidDataParamsException or InvalidRoundException)
 			{
-				return BadRequest(new { error = e.Message });
+				return BadRequest(new { message = e.Message });
 			}
 			catch (Exception e)
 			{
@@ -344,7 +344,7 @@ namespace Checkmate.API.Controllers
 			}
 			catch (Exception e) when (e is InvalidDataParamsException)
 			{
-				return BadRequest(new { error = e.Message });
+				return BadRequest(new { message = e.Message });
 			}
 			catch (Exception e)
 			{

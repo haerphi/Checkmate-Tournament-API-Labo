@@ -47,7 +47,7 @@ namespace Checkmate.API.Controllers
 			}
 			catch (Exception e) when (e is NicknameAlreadyUsedException || e is EmailAlreadyUsedException || e is EloRangeException)
 			{
-				return BadRequest(new { error = e.Message });
+				return BadRequest(new { message = e.Message });
 			}
 			catch (Exception e)
 			{
@@ -64,14 +64,14 @@ namespace Checkmate.API.Controllers
 		{
 			if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int reqPlayerId))
 			{
-				return Unauthorized();
+				return Forbid();
 			}
 
 			if (id != -1)
 			{
 				if (!Enum.TryParse(User.FindFirst(ClaimTypes.Role)?.Value, out RoleEnum role) || role != RoleEnum.Admin)
 				{
-					return Unauthorized();
+					return Forbid();
 				}
 			}
 

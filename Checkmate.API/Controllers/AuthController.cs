@@ -32,7 +32,7 @@ namespace Checkmate.API.Controllers
 
 			if (string.IsNullOrEmpty(login.Email) && string.IsNullOrEmpty(login.Nickname))
 			{
-				return BadRequest(new { error = "Email or Nickname is required" });
+				return BadRequest(new { message = "Email or Nickname is required" });
 			}
 
 			try
@@ -42,7 +42,7 @@ namespace Checkmate.API.Controllers
 			}
 			catch (Exception e) when (e is InvalidDataParamsException || e is PlayerNotFoundException || e is InvalidPasswordException)
 			{
-				return BadRequest(new { error = "Invalid nickname or email or password" });
+				return BadRequest(new { message = "Invalid nickname or email or password" });
 			}
 			catch (Exception e)
 			{
@@ -56,7 +56,7 @@ namespace Checkmate.API.Controllers
 		{
 			if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int playerId))
 			{
-				return Unauthorized();
+				return Forbid();
 			}
 
 
@@ -64,7 +64,7 @@ namespace Checkmate.API.Controllers
 			{
 				if (!Enum.TryParse(User.FindFirst(ClaimTypes.Role)?.Value, out RoleEnum role) || role != RoleEnum.Admin)
 				{
-					return Unauthorized();
+					return Forbid();
 				}
 
 				playerId = changePassword.PlayerId;
@@ -86,7 +86,7 @@ namespace Checkmate.API.Controllers
 			}
 			catch (Exception e) when (e is InvalidDataParamsException || e is PlayerNotFoundException || e is InvalidPasswordException)
 			{
-				return BadRequest(new { error = "Invalid password" });
+				return BadRequest(new { message = "Invalid password" });
 			}
 			catch (Exception e)
 			{
