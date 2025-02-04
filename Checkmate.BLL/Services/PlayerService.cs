@@ -5,6 +5,7 @@ using Checkmate.Domain.Models;
 using Checkmate.Domain.Models.Paginations;
 using Checkmate.Domain.Utils;
 using Isopoh.Cryptography.Argon2;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Checkmate.BLL.Services
 {
@@ -76,18 +77,18 @@ namespace Checkmate.BLL.Services
 
 		public Player Login(string? email, string? nickname, string password)
 		{
-			if (email == null && nickname == null)
+			if (email.IsNullOrEmpty() && nickname.IsNullOrEmpty())
 			{
 				throw new InvalidDataParamsException("Email or nickname must be provided.");
 			}
 
 			Player? player = null;
 
-			if (email != null)
+			if (!email.IsNullOrEmpty())
 			{
 				player = m_PlayerRepository.GetByEmail(email);
 			}
-			else if (nickname != null)
+			else if (!nickname.IsNullOrEmpty())
 			{
 				player = m_PlayerRepository.GetByNickname(nickname);
 			}
